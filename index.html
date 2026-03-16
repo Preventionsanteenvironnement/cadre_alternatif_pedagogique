@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadre pedagogique alternatif B2GATL</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#333}
+.hdr{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:14px 18px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.hdr h1{font-size:1.1em;font-weight:700}.hdr .sub{font-size:.7em;opacity:.7;margin-top:2px}
+.tabs{display:flex;margin-top:10px;background:rgba(0,0,0,.2);border-radius:10px;overflow:hidden}
+.tabs button{flex:1;padding:9px;border:none;background:0;color:rgba(255,255,255,.55);font-size:.82em;font-weight:600;cursor:pointer}
+.tabs button.on{background:rgba(255,255,255,.18);color:#fff}
+.c{max-width:720px;margin:0 auto;padding:10px 14px}
+.box{background:#fff;border-radius:13px;padding:14px;margin-bottom:9px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.lbl{font-size:.7em;font-weight:700;color:#78909c;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.wk-nav{display:flex;align-items:center;gap:8px;justify-content:center}
+.wk-nav button{width:36px;height:36px;border-radius:50%;border:1.5px solid #c5cae9;background:#fff;font-size:1.1em;cursor:pointer;color:#1a237e;font-weight:700}
+.wk-nav button:hover{background:#e8eaf6}
+.wk-label{text-align:center;min-width:220px}
+.wk-label .wt{font-size:1em;font-weight:700;color:#1a237e}
+.wk-label .wd{font-size:.78em;color:#666;margin-top:1px}
+.wk-alert{text-align:center;margin-top:6px;padding:6px 12px;border-radius:8px;font-size:.78em;font-weight:600}
+.wk-alert.vac{background:#fff3e0;color:#e65100;border:1px solid #ffcc80}
+.wk-alert.fer{background:#fce4ec;color:#c62828;border:1px solid #ef9a9a}
+.wk-alert.pfmp{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.wk-alert.form{background:#e3f2fd;color:#0d47a1;border:1px solid #90caf9}
+.gs{display:flex;gap:6px;margin-bottom:4px}
+.gs button{flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:11px;background:#fff;cursor:pointer;font-size:.85em;font-weight:600;text-align:center;transition:.15s}
+.gs button.on{border-color:#d32f2f;background:#ffebee;color:#c62828}
+.ds{display:flex;gap:4px}
+.db{flex:1;padding:9px 3px;border:2px solid #e8eaf6;border-radius:9px;background:#fff;cursor:pointer;font-size:.8em;font-weight:600;text-align:center;color:#455a64;transition:.15s;position:relative}
+.db.on{background:#1a237e;color:#fff;border-color:#1a237e}
+.db.off{opacity:.3;border-style:dashed;cursor:default}
+.db .badge{position:absolute;top:-4px;right:-4px;width:8px;height:8px;border-radius:50%;background:#e53935}
+.ss{display:flex;gap:4px;flex-wrap:wrap}
+.sb{flex:1;min-width:68px;padding:9px 4px;border:2px solid #e8eaf6;border-radius:9px;background:#fff;cursor:pointer;font-size:.8em;font-weight:600;text-align:center;color:#455a64;transition:.15s}
+.sb.on{background:#0d47a1;color:#fff;border-color:#0d47a1}
+.sb.now{border-color:#ff6f00;box-shadow:0 0 0 2px rgba(255,111,0,.2)}
+.sb.off{opacity:.3;border-style:dashed;cursor:default}
+.gi{padding:10px 12px;border-radius:9px;font-size:.82em;font-weight:500;display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.gi.act{background:#e3f2fd;border:1px solid #64b5f6;color:#0d47a1}
+.gi.grp{background:#fff3e0;border:1px solid #ffb74d;color:#e65100}
+.gi.no{background:#f5f5f5;border:1px solid #e0e0e0;color:#999}
+.gi.pfmp-alert{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32}
+.flt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.flt button{padding:6px 13px;border:1.5px solid #e0e0e0;border-radius:18px;background:#fff;cursor:pointer;font-size:.73em;font-weight:600;transition:.15s}
+.flt button.on{color:#fff}
+.flt .fa.on{background:#455a64;border-color:#455a64}
+.flt .fv.on{background:#2e7d32;border-color:#2e7d32}
+.flt .fn.on{background:#78909c;border-color:#78909c}
+.cbar{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.cp{padding:4px 11px;border-radius:18px;font-size:.74em;font-weight:700}
+.cp.cv{background:#e8f5e9;color:#1b5e20}.cp.cn{background:#f5f5f5;color:#757575}
+.rc{border-radius:11px;padding:13px 15px;margin-bottom:7px;border:1px solid #e0e0e0;transition:.15s}
+.rc.v{border-left:5px solid #2e7d32;background:linear-gradient(135deg,#f1f8e9,#e8f5e9)}
+.rc.nv{border-left:5px solid #bdbdbd;background:#fafafa}
+.rc .rn{font-weight:700;font-size:.95em;color:#212121;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.rc .thumb{font-size:1.2em}
+.rc .rcl{display:flex;align-items:center;gap:8px;padding:7px 11px;background:rgba(0,0,0,.04);border-radius:8px;margin-bottom:6px}
+.rc .rcl .ci{font-size:1.3em}.rc .rcl .cn2{font-weight:700;font-size:.92em;color:#1a237e}
+.rc .rcl .cm{font-size:.75em;color:#666;margin-top:1px}
+.rc .rs{display:flex;align-items:center;gap:5px;padding:3px 9px;background:#e3f2fd;border-radius:6px;font-size:.8em;font-weight:600;color:#0d47a1}
+.rc .rs.empty{background:#fafafa;color:#bbb;border:1px dashed #ddd}
+.rc .pfmp-tag{display:inline-block;padding:2px 8px;border-radius:10px;background:#e8f5e9;color:#2e7d32;font-size:.7em;font-weight:600;margin-left:6px}
+.empty-msg{text-align:center;padding:30px 18px;color:#999;font-size:.85em;line-height:1.5}
+.empty-msg .ei{font-size:2.2em;display:block;margin-bottom:8px}
+.info{background:#f5f5f5;border:1px solid #e0e0e0;border-radius:9px;padding:9px 12px;font-size:.72em;color:#757575;text-align:center;margin-top:10px;line-height:1.4}
+
+/* CONFIG */
+.pg{display:none}.pg.show{display:block}
+.ct-btn{display:block;width:100%;padding:13px 15px;border:2px solid #e8eaf6;border-radius:11px;background:#fff;cursor:pointer;text-align:left;font-size:.88em;margin-bottom:5px;transition:.15s}
+.ct-btn:hover{border-color:#7986cb;background:#f8f8ff}
+.ct-btn .tn{font-weight:700;color:#1a237e}.ct-btn .ts{font-size:.72em;color:#888;margin-top:2px}
+.ct-btn .tr{font-size:.73em;color:#0d47a1;font-weight:600;margin-top:1px}
+.back-btn{display:flex;align-items:center;gap:5px;padding:7px 14px;border:none;background:#e8eaf6;color:#1a237e;border-radius:8px;font-size:.83em;font-weight:600;cursor:pointer;margin-bottom:10px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:.78em;font-weight:600;color:#555;margin-bottom:4px}
+.fg input{width:100%;padding:9px 11px;border:1.5px solid #ddd;border-radius:8px;font-size:.88em}
+.fg input:focus{border-color:#1a237e;outline:none}
+.cdt{font-weight:700;font-size:.83em;margin:14px 0 5px;padding:5px 11px;background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:7px;color:#1a237e}
+.cs{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border:1px solid #eee;border-radius:9px;margin-bottom:4px;background:#fafafa;flex-wrap:wrap;gap:5px}
+.cs .si{min-width:150px}.cs .st{font-weight:700;font-size:.83em;color:#333}
+.cs .sc{font-size:.76em;color:#1a237e;font-weight:500}
+.cs .sr{font-size:.72em;color:#0d47a1}
+.cs .pfmp-note{font-size:.7em;color:#2e7d32;font-weight:600}
+.tb{width:40px;height:40px;border-radius:50%;border:2px solid #e0e0e0;background:#fff;font-size:1.3em;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
+.tb.on{border-color:#2e7d32;background:#e8f5e9}
+.tb:hover{transform:scale(1.1)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#2e7d32;color:#fff;padding:9px 22px;border-radius:25px;font-size:.83em;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:200;display:none}
+</style>
+</head>
+<body>
+<div class="hdr">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div><h1>Cadre pedagogique alternatif</h1><div class="sub">B2GATL — Trouver une salle d'accueil pour un eleve</div></div>
+</div>
+<div class="tabs">
+<button class="on" onclick="showPg('main',this)">Rechercher</button>
+<button onclick="showPg('config',this)">Configurer</button>
+</div>
+</div>
+
+<div class="pg show" id="pgMain"><div class="c">
+<div class="box"><div class="lbl">Semaine</div>
+<div class="wk-nav"><button onclick="chgWk(-1)">&lsaquo;</button><div class="wk-label"><div class="wt" id="wkType"></div><div class="wd" id="wkDates"></div></div><button onclick="chgWk(1)">&rsaquo;</button></div>
+<div id="wkAlerts"></div></div>
+
+<div class="box"><div class="lbl">Eleve issu de</div><div class="gs" id="gsBtns"></div></div>
+<div class="box"><div class="lbl">Jour</div><div class="ds" id="dBtns"></div></div>
+<div class="box"><div class="lbl">Creneau</div><div class="ss" id="sBtns"></div></div>
+<div id="gatlBox"></div>
+<div id="fltBox" style="display:none"><div class="box" style="padding:9px 12px"><div class="lbl">Filtrer</div><div class="flt"><button class="fa on" onclick="setF('all',this)">Tous</button><button class="fv" onclick="setF('v',this)">Valides</button><button class="fn" onclick="setF('nv',this)">Non configures</button></div></div></div>
+<div id="cntBar" class="cbar"></div>
+<div id="res"></div>
+<div class="info">Aucune donnee personnelle collectee. Stockage local navigateur. RGPD.</div>
+</div></div>
+
+<div class="pg" id="pgConfig"><div class="c">
+<div id="cfgList"></div><div id="cfgDetail"></div>
+<div class="info">Modifications enregistrees automatiquement dans votre navigateur.</div>
+</div></div>
+
+<div class="toast" id="toast">Enregistre !</div>
+
+<script>
+const D=["Lundi","Mardi","Mercredi","Jeudi","Vendredi"],DL=["Lun","Mar","Mer","Jeu","Ven"];
+const H=["8h30","9h30","10h30","11h30","14h00","15h00","16h00","17h00"];
+
+// WEEKS: March 16 = week A. Alternates. Vacation April 5-19.
+const WK_START=new Date(2026,2,16);
+const VACANCES={s:new Date(2026,3,5),e:new Date(2026,3,19)};
+const FERIES=["2026-05-01","2026-05-08","2026-05-14","2026-05-15","2026-05-25"];
+const PFMP=[
+{c:["C2JP"],s:"2026-03-16",e:"2026-04-05"},
+{c:["C2HORT"],s:"2026-03-16",e:"2026-04-03"},
+{c:["C2PSR"],s:"2026-05-04",e:"2026-05-31"},
+{c:["B2GATL1","B2GATL2","B2AGORA"],s:"2026-05-18",e:"2026-06-28"},
+{c:["B2MELEC"],s:"2026-05-18",e:"2026-06-28"},
+{c:["BTAGO1","BTAGO2","BTMELEC"],s:"2026-05-18",e:"2026-06-28"},
+{c:["B1AGO1","B1AGO2","B1AGORA"],s:"2026-06-01",e:"2026-06-28"},
+{c:["B1MELEC"],s:"2026-06-01",e:"2026-06-28"},
+{c:["C1PSR"],s:"2026-06-01",e:"2026-06-21"},
+{c:["C1JP"],s:"2026-06-08",e:"2026-06-28"},
+{c:["C1HORT"],s:"2026-06-08",e:"2026-06-28"}
+];
+const FORMATIONS=[{t:"mecheri",d:"2026-03-20",desc:"Prof. PSE en formation"}];
+
+// B2GATL schedules: [dayIdx, slotIdx, matiere, salle, sem]
+const G1=[
+[0,1,"Francais","119A","AB"],[0,2,"HG-EMC","119B","AB"],[0,3,"HG-EMC","119B","AB"],
+[0,4,"Maths","114","AB"],[0,6,"Co-ens Maths","114","A"],[0,6,"Co-ens Francais","119A","B"],
+[0,7,"PSE","205 Techno","AB"],
+[1,0,"Ens. Pro","122 GA","AB"],[1,1,"Ens. Pro","122 GA","AB"],[1,3,"Ens. Pro","122 GA","AB"],
+[1,4,"Francais","119A","A"],[1,5,"Francais","119A","AB"],
+[1,6,"Ens. Pro","122 GA","AB"],[1,7,"Ens. Pro","122 GA","AB"],
+[2,0,"EPS","Gymnase","AB"],[2,1,"EPS","Gymnase","AB"],
+[2,2,"DNL","123 GA","A"],[2,2,"DNL","119B","B"],[2,3,"Anglais","119B","AB"],
+[3,0,"Soutien","123 GA","AB"],[3,2,"Espagnol","117","AB"],[3,3,"Anglais","117","AB"],
+[3,4,"Ens. Pro","123 GA","AB"],[3,5,"Ens. Pro","123 GA","AB"],[3,6,"Ens. Pro","123 GA","AB"],
+[3,7,"Arts Appliques","016 Arts","AB"],
+[4,0,"Ens. Pro","114","AB"],[4,1,"Eco-Droit","114","AB"],[4,2,"Maths","114","AB"],
+[4,3,"Espagnol","114","AB"],[4,4,"Ens. Pro","120 GA","AB"],[4,5,"Ens. Pro","120 GA","AB"]
+];
+const G2=[
+[0,1,"Espagnol","118","AB"],[0,2,"HG-EMC","119B","AB"],[0,3,"HG-EMC","119B","AB"],
+[0,4,"Ens. Pro","122 GA","AB"],[0,5,"Ens. Pro","122 GA","AB"],
+[0,6,"Co-ens Maths","114","A"],[0,6,"Co-ens Francais","119A","B"],
+[0,7,"PSE","205 Techno","AB"],
+[1,0,"Ens. Pro","120 GA","AB"],[1,1,"Ens. Pro","120 GA","AB"],[1,2,"Ens. Pro","120 GA","AB"],
+[1,3,"Maths","114","AB"],[1,4,"Francais","119A","B"],[1,5,"Francais","119A","AB"],
+[1,6,"Ens. Pro","120 GA","AB"],
+[2,0,"EPS","Gymnase","AB"],[2,1,"EPS","Gymnase","AB"],
+[2,2,"DNL","119B","A"],[2,2,"DNL","123 GA","B"],
+[3,0,"Soutien","205 Techno","AB"],[3,1,"Francais","119A","AB"],
+[3,2,"Espagnol","117","AB"],[3,3,"Anglais","117","AB"],
+[3,4,"Ens. Pro","124","AB"],[3,5,"Ens. Pro","124","AB"],[3,6,"Ens. Pro","124","AB"],
+[3,7,"Arts Appliques","016 Arts","AB"],
+[4,0,"Anglais","119B","AB"],[4,1,"Eco-Droit","114","AB"],[4,2,"Maths","114","AB"],
+[4,3,"Ens. Pro","120 GA","AB"],[4,4,"Ens. Pro","124","AB"],[4,5,"Ens. Pro","124","AB"]
+];
+
+// Teachers: [dayIdx, slotIdx, classe, salle, matiere, sem, isGATL]
+const T=[
+{id:"bertrand",nom:"Prof. Arts appliques / Plastiques",mat:"Arts appliques / Arts plastiques",s:[
+[0,1,"BPSE2","016 Arts","Arts appliques","AB",0],[0,2,"BTMELEC","016 Arts","Arts appliques","AB",0],
+[0,3,"5EA","016 Arts","Arts plastiques","AB",0],[0,5,"6EA","016 Arts","Arts plastiques","AB",0],
+[0,6,"4EA","016 Arts","Arts plastiques","AB",0],[0,7,"TAGORA","016 Arts","Arts appliques","AB",0],
+[1,1,"CPSE1","Atelier Vannerie","Chef d'oeuvre CAP","AB",0],[1,2,"CPSE1","Atelier Vannerie","Chef d'oeuvre CAP","AB",0],
+[1,3,"CPSE1","Atelier Vannerie","Chef d'oeuvre CAP","AB",0],[1,4,"CATART1","016 Arts","Atelier artistique","AB",0],
+[2,0,"B2MELEC","016 Arts","Arts appliques","AB",0],[2,2,"3EB","016 Arts","Arts plastiques","AB",0],
+[2,3,"3EA","016 Arts","Arts plastiques","AB",0],[2,4,"CPSE1","016 Arts","Arts appliques","AB",0],
+[2,5,"C2CAN","016 Arts","Arts appliques","AB",0],
+[3,1,"FCIL","016 Arts","Arts appliques","AB",0],[3,2,"FCIL","016 Arts","Arts appliques","AB",0],
+[3,3,"FCIL","016 Arts","Arts appliques","AB",0],[3,4,"B1MELEC","016 Arts","Arts appliques","AB",0],
+[3,5,"C1CAN","016 Arts","Arts appliques","AB",0],[3,6,"BPSE1","016 Arts","Arts appliques","AB",0],
+[3,7,"B2GATL1/B2GATL2","016 Arts","Arts appliques","AB",1]
+]},
+{id:"bourgey",nom:"Prof. Anglais LV1 / DNL",mat:"Anglais LV1 / DNL",s:[
+[1,0,"CPSE1","118","Anglais LV1","B",0],[1,1,"B1MELEC","118","Anglais LV1","AB",0],
+[1,3,"C2JP","118","Anglais LV1","AB",0],[1,4,"B1MELEC","118","Anglais LV1","AB",0],
+[1,5,"BTMELEC","118","Anglais LV1","A",0],[1,6,"BTAGO2","118","Anglais LV1","AB",0],
+[2,0,"BTAGO1","119B","Anglais LV1","AB",0],[2,1,"BTAGO2","119B","Anglais LV1","AB",0],
+[2,2,"B2GATL1","123 GA","DNL","A",1],[2,2,"B2GATL2","123 GA","DNL","B",1],
+[2,3,"B2GATL1","119B","Anglais LV1","AB",1],
+[3,0,"BTMELEC","119B","Anglais LV1","AB",0],[3,1,"CPSE1","119B","Anglais LV1","AB",0],
+[3,3,"BPSE1","117","Anglais LV1","AB",0],[3,4,"FCIL","Atelier FCIL","Anglais LV1","AB",0],
+[3,5,"C2HORT","118","Anglais LV1","AB",0],[3,6,"BTAGO1","118","Anglais LV1","AB",0],
+[4,0,"B2GATL2","119B","Anglais LV1","AB",1],[4,1,"BTMELEC","119B","Anglais LV1","AB",0],
+[4,2,"C2HORT","119A","Anglais LV1","AB",0],[4,3,"TAGO","119A","Anglais DNL","AB",0],
+[4,4,"C2JP","119B","Anglais LV1","AB",0],
+[4,5,"BTAGO2","119B","Anglais LV1","A",0],[4,5,"BTAGO1","119B","Anglais LV1","B",0]
+]},
+{id:"chaize",nom:"Prof. Ens. Pro GA (BTAGO)",mat:"Ens. Pro Eco-gestion (BTAGO)",s:[
+[0,1,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],[0,2,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],
+[0,3,"DNL_1AGO","119A","Anglais DNL","B",0],
+[0,4,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],[0,5,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
+[0,6,"BPSE1","114","Co-ens Maths","A",0],[0,6,"BPSE1","119A","Co-ens Francais","B",0],
+[0,7,"DNL_1AGO","123 GA","Anglais DNL","A",0],
+[2,0,"BTAGO2","123 GA","Soutien au parcours","A",0],
+[2,2,"B2GATL2","119B","DNL","A",1],[2,2,"B2GATL1","119B","DNL","B",1],
+[2,4,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
+[2,5,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],[2,6,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],
+[4,0,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],[4,1,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
+[4,2,"BTAGO2","123 GA","Soutien au parcours","AB",0],[4,3,"B2MELEC","123 GA","Eco-gestion","AB",0],
+[4,4,"TAGORA","114","Projet BCP","AB",0],
+[4,5,"BTAGO1","123 GA","Ens. Pro Eco-gestion","A",0],[4,5,"BTAGO2","123 GA","Ens. Pro Eco-gestion","B",0]
+]},
+{id:"gubanti",nom:"Prof. EPS",mat:"EPS",s:[
+[0,1,"MEPS2","Gymnase","EPS","AB",0],[0,2,"3EA/3EB/4EA","Gymnase","EPS","AB",0],
+[0,3,"TAGORA","Gymnase","EPS","AB",0],
+[1,0,"CEPS4","Gymnase","EPS","AB",0],[1,1,"CEPS4","Gymnase","EPS","AB",0],
+[1,2,"BPSE1","Gymnase","EPS","AB",0],
+[2,0,"BPSE1","Gymnase","EPS","AB",0],[2,1,"BPSE1","Gymnase","EPS","AB",0],
+[2,2,"MEPS2","Gymnase","EPS","AB",0],
+[3,0,"TAGORA","Gymnase","EPS","AB",0],[3,1,"TAGORA","Gymnase","EPS","AB",0],
+[4,0,"CEPS2","Gymnase","EPS","AB",0],[4,1,"CEPS2","Gymnase","EPS","AB",0],
+[4,2,"MEPS1","Gymnase","EPS","AB",0]
+]},
+{id:"herizi",nom:"Prof. Ens. Pro GA (B1AGO/BTS)",mat:"Ens. Pro Eco-gestion (B1AGO/BTS)",s:[
+[0,4,"BTS","BTS1/BTS2","OPA BTS","AB",0],[0,5,"BTS","BTS1/BTS2","OPA BTS","AB",0],
+[0,6,"BTS","BTS1/BTS2","OPA BTS","AB",0],
+[1,1,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
+[1,3,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
+[1,6,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,7,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
+[2,1,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],[2,2,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],
+[2,3,"B1AGO1","122 GA","Soutien au parcours","AB",0],
+[3,0,"BPSE1","122 GA","Co-ens Francais","A",0],
+[3,1,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],[3,2,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],
+[3,3,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],
+[3,5,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],[3,6,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],
+[4,1,"BPSE2","122 GA","Projet BCP","AB",0],
+[4,2,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],[4,3,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0]
+]},
+{id:"ma",nom:"Prof. Ens. Pro GA (B1AGO1)",mat:"Ens. Pro Eco-gestion (B1AGO1/B2GATL2)",s:[
+[1,7,"BPSE2","114","Economie-Droit","AB",0],
+[3,1,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],[3,2,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],
+[3,3,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],
+[3,4,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1],[3,5,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1],
+[3,6,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1],
+[4,2,"B1AGO1","124","Ens. Pro Eco-gestion","AB",0],[4,3,"B1AGO1","124","Ens. Pro Eco-gestion","AB",0],
+[4,4,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1],[4,5,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1]
+]},
+{id:"mecheri",nom:"Prof. PSE",mat:"PSE",s:[
+[0,1,"C2PSR","010 PSR","PSE","AB",0],[0,2,"C1PSR","010 PSR","PSE","AB",0],
+[0,4,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],[0,5,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],
+[0,7,"B2GATL1/B2GATL2","205 Techno","PSE","AB",1],
+[1,0,"B1MELEC","205 Techno","PSE","AB",0],[1,1,"C2HORT","205 Techno","PSE","AB",0],
+[1,2,"TAGORA","205 Techno","PSE","AB",0],[1,3,"TAGORA","205 Techno","PSE","AB",0],
+[3,0,"B2GATL2","205 Techno","Soutien au parcours","AB",1],
+[3,1,"C2JP","205 Techno","PSE","AB",0],[3,2,"BTMELEC","205 Techno","PSE","AB",0],
+[3,3,"BTMELEC","205 Techno","PSE","AB",0],[3,4,"C1JP","205 Techno","PSE","AB",0],
+[4,0,"C1JP","118","PSE","AB",0],[4,1,"B2MELEC","118","PSE","AB",0],
+[4,2,"CPSE1","118","PSE","AB",0],[4,3,"C1PSR","205 Techno","PSE","AB",0],
+[4,4,"BPSE2","205 Techno","PSE","AB",0],[4,5,"C1CAN","205 Techno","PSE","AB",0]
+]},
+{id:"minardi",nom:"Prof. Francais (lycee pro)",mat:"Francais",s:[
+[0,1,"B2GATL1","119A","Francais","AB",1],
+[0,2,"BCGEN1","BTS1/BTS2","Culture generale BTS","AB",0],[0,3,"BCGEN1","BTS1/BTS2","Culture generale BTS","AB",0],
+[0,5,"B1MELEC","119A","Francais","AB",0],[0,6,"BTAGO2","119A","Francais","AB",0],
+[0,7,"BTMELEC","119A","Francais","AB",0],
+[1,0,"BTMELEC","119A","Francais","AB",0],[1,1,"BTMELEC","119A","Francais","AB",0],
+[1,2,"BTAGO1","119A","Francais","AB",0],[1,3,"BPSE2","119A","Francais","AB",0],
+[1,4,"B2GATL1","119A","Francais","A",1],[1,4,"B2GATL2","119A","Francais","B",1],
+[1,5,"BPSE1","119A","Francais","AB",0],[1,6,"B1MELEC","119A","Francais","AB",0],
+[2,1,"BTAGO1","119A","Francais","AB",0],[2,2,"BTAGO1","119A","Francais","AB",0],
+[2,3,"B1AGO2","119A","Soutien au parcours","AB",0],
+[3,0,"BPSE2","119A","Francais","AB",0],[3,1,"B2GATL2","119A","Francais","AB",1],
+[3,3,"B2MELEC","119A","Francais","AB",0],
+[3,4,"BTAGO2","119A","Francais","AB",0],[3,5,"BTAGO2","119A","Francais","AB",0],
+[3,6,"B2MELEC","119A","Francais","AB",0]
+]},
+{id:"pedrot",nom:"Prof. Espagnol LV2 / FLE",mat:"Espagnol LV2 / FLE",s:[
+[0,1,"B2GATL2","118","Espagnol LV2","AB",1],
+[0,2,"BPSE2","114","Espagnol LV2","AB",0],[0,3,"4EA","112","Espagnol LV2","AB",0],
+[0,4,"3EB","208","Espagnol LV2","AB",0],[0,6,"BTAGO1/BTAGO2","114","Espagnol LV2","AB",0],
+[1,0,"BTAGO1/BTAGO2","114","Espagnol LV2","AB",0],[1,1,"3EA","207","Espagnol LV2","AB",0],
+[1,2,"BPSE2","114","Espagnol LV2","AB",0],[1,3,"5EA","111","Espagnol LV2","AB",0],
+[2,1,"5EA","111","Espagnol LV2","AB",0],[2,2,"4EA","112","Espagnol LV2","AB",0],
+[2,3,"3EB","208","Espagnol LV2","AB",0],
+[3,1,"3EA","207","Espagnol LV2","A",0],[3,1,"4EA","112","Espagnol LV2","B",0],
+[3,2,"BPSE1","117","Espagnol LV2","AB",0],[3,3,"FLE","118","FLE","AB",0],
+[3,4,"3EA","207","Espagnol LV2","AB",0],[3,5,"FLE","119B","FLE","AB",0],
+[4,0,"5EA","111","Espagnol LV2","AB",0],[4,1,"3EB","208","Espagnol LV2","AB",0],
+[4,3,"B2GATL1","114","Espagnol LV2","AB",1]
+]},
+{id:"mayol",nom:"Prof. Eco-Droit / CEJM",mat:"Eco-Droit / CEJM / Ens. Pro",s:[
+[0,0,"BCGEN1","BTS1/BTS2","CEJM","AB",0],[0,1,"BCGEN1","BTS1/BTS2","CEJM","AB",0],
+[0,4,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],[0,5,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],
+[1,1,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
+[1,4,"BTAGO2","120 GA","Economie-Droit","AB",0],
+[1,6,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
+[2,1,"BCGEN1","BTS1/BTS2","CEJM","AB",0],[2,2,"BCGEN1","BTS1/BTS2","CEJM","AB",0],
+[3,0,"B2GATL1","123 GA","Soutien au parcours","AB",1],
+[3,3,"BTAGO1","123 GA","Economie-Droit","AB",0],
+[3,4,"B2GATL1","123 GA","Ens. Pro Eco-gestion","AB",1],[3,5,"B2GATL1","123 GA","Ens. Pro Eco-gestion","AB",1],
+[4,0,"B2GATL1","114","Ens. Pro Eco-gestion","AB",1],
+[4,1,"BPSE1","114","Economie-Droit","AB",0],
+[4,3,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
+[4,4,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1],[4,5,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1]
+]},
+{id:"milleret",nom:"Prof. Francais / HG-EMC",mat:"Francais / HG-EMC (college + lycee)",s:[
+[0,1,"BTMELEC","119B","HG-EMC","AB",0],
+[0,2,"BPSE1","119B","HG-EMC","AB",0],
+[0,3,"BPSE1","119B","HG-EMC","AB",0],
+[1,0,"3EA","207","Francais","AB",0],
+[1,1,"BTAGO2","119B","HG-EMC","AB",0],
+[1,2,"3EB","208","Francais","AB",0],
+[1,3,"3EB","208","Vie de classe","AB",0],
+[1,4,"BTAGO1","119B","HG-EMC","AB",0],
+[1,5,"BTAGO1","119B","HG-EMC","AB",0],
+[3,0,"3EA","207","Francais","AB",0],
+[3,1,"3EB","208","Francais","AB",0],
+[3,2,"B2MELEC","119B","HG-EMC","AB",0],
+[3,3,"BTAGO2","119B","HG-EMC","AB",0],
+[3,5,"3EA","207","Francais","AB",0],
+[3,6,"3EB","208","Francais","AB",0],
+[4,2,"BTMELEC","119B","HG-EMC","AB",0],
+[4,4,"3EB","208","Francais","AB",0]
+]},
+{id:"maths",nom:"Prof. Mathematiques",mat:"Mathematiques",s:[
+[0,4,"B2GATL1","114","Mathematiques","AB",1],
+[0,5,"3EA","207","Mathematiques","AB",0],
+[0,6,"BPSE1","114","Co-ens Mathematiques","A",1],
+[0,6,"5EA","111","Mathematiques","B",0],
+[1,1,"3EB","208","Mathematiques","AB",0],
+[1,2,"5EA","111","Mathematiques","AB",0],
+[1,3,"B2GATL2","114","Mathematiques","AB",1],
+[1,4,"Co-ens","Atelier Chaiserie","Co-ens Mathematiques","AB",0],
+[1,6,"3EA","207","Mathematiques","B",0],
+[2,0,"3EB","208","Mathematiques","A",0],
+[2,1,"5EA","111","Vie de classe","A",0],
+[3,4,"3EB","208","Mathematiques","AB",0],
+[3,5,"5EA","111","Mathematiques","AB",0],
+[3,6,"3EA","207","Mathematiques","AB",0],
+[4,1,"5EA","111","Mathematiques","AB",0],
+[4,2,"B2GATL1/B2GATL2","114","Mathematiques","AB",1],
+[4,3,"C2HORT","113 Info","AP Mathematiques","AB",0],
+[4,4,"3EA","207","FR-Maths","AB",0],
+[4,5,"3EB","208","FR-Maths","AB",0]
+]}
+];
+
+// ============= AVATARS =============
+function emojiFor(id){
+  const E={
+    bertrand:"🎨",bourgey:"🇬🇧",chaize:"💼",gubanti:"🏃",
+    herizi:"💼",ma:"💼",mecheri:"🧪",minardi:"✍️",
+    pedrot:"🇪🇸",mayol:"📊",milleret:"📖",maths:"🔢"
+  };
+  return E[id]||"👤";
+}
+
+// ============= STATE =============
+let curWkIdx=0,selG="B2GATL1",selD=null,selH=null,curFlt="all";
+let weeks=[];
+
+function genWeeks(){
+  let d=new Date(WK_START);const end=new Date(2026,5,30);let isA=true;
+  while(d<=end){
+    let m=new Date(d),f=new Date(d);f.setDate(f.getDate()+4);
+    weeks.push({mon:new Date(m),fri:new Date(f),t:isA?"A":"B"});
+    d.setDate(d.getDate()+7);isA=!isA;
+  }
+}
+genWeeks();
+
+function fmtD(d){return d.getDate()+"/"+(d.getMonth()+1)}
+function fmtISO(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function isVac(wk){return wk.mon>=VACANCES.s&&wk.mon<=VACANCES.e}
+function isFerie(wk,di){let d=new Date(wk.mon);d.setDate(d.getDate()+di);return FERIES.includes(fmtISO(d))}
+function dateOfDay(wk,di){let d=new Date(wk.mon);d.setDate(d.getDate()+di);return d}
+function isClassPFMP(cls,wk){
+  let mon=wk.mon;
+  for(let p of PFMP){
+    let s=new Date(p.s),e=new Date(p.e);
+    if(mon>=s&&mon<=e){
+      for(let c of p.c){if(cls.toUpperCase().includes(c.toUpperCase()))return true}
+    }
+  }
+  return false;
+}
+function isGATLPFMP(wk){return isClassPFMP("B2GATL1",wk)}
+function getFormation(wk,di){
+  let d=dateOfDay(wk,di);let iso=fmtISO(d);
+  return FORMATIONS.filter(f=>f.d===iso);
+}
+
+// ============= UI =============
+function showPg(p,btn){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pgMain').className=p==='main'?'pg show':'pg';
+  document.getElementById('pgConfig').className=p==='config'?'pg show':'pg';
+  if(p==='config')renderCfgList();
+  if(p==='main')render();
+}
+
+function chgWk(dir){curWkIdx=Math.max(0,Math.min(weeks.length-1,curWkIdx+dir));render()}
+
+function renderWk(){
+  let wk=weeks[curWkIdx];
+  document.getElementById('wkType').textContent="Semaine "+wk.t;
+  document.getElementById('wkDates').textContent=fmtD(wk.mon)+" au "+fmtD(wk.fri)+" "+wk.mon.getFullYear();
+  let alerts="";
+  if(isVac(wk))alerts+='<div class="wk-alert vac">Vacances scolaires — pas de cours</div>';
+  if(isGATLPFMP(wk))alerts+='<div class="wk-alert pfmp">B2GATL1 et B2GATL2 en PFMP — pas de deplacement necessaire</div>';
+  // Check feries this week
+  for(let i=0;i<5;i++){if(isFerie(wk,i))alerts+='<div class="wk-alert fer">'+D[i]+' : jour ferie</div>'}
+  // Formations
+  for(let i=0;i<5;i++){let fs=getFormation(wk,i);for(let f of fs)alerts+='<div class="wk-alert form">'+D[i]+' : '+f.desc+'</div>'}
+  document.getElementById('wkAlerts').innerHTML=alerts;
+}
+
+function renderGS(){
+  document.getElementById('gsBtns').innerHTML=["B2GATL1","B2GATL2"].map(g=>
+    `<button class="${selG===g?'on':''}" onclick="selG='${g}';render()">${g}</button>`
+  ).join('');
+}
+
+function renderDays(){
+  let wk=weeks[curWkIdx];
+  document.getElementById('dBtns').innerHTML=D.map((d,i)=>{
+    let off=isVac(wk)||isFerie(wk,i)||(isGATLPFMP(wk));
+    let hasBadge=isFerie(wk,i);
+    let fs=getFormation(wk,i);
+    return`<button class="db${selD===i?' on':''}${off?' off':''}" onclick="${off?'':'selD='+i+';render()'}" data-d="${i}">
+      ${DL[i]}${hasBadge?'<span class="badge"></span>':''}${fs.length?'<span class="badge" style="background:#1565c0"></span>':''}
+    </button>`;
+  }).join('');
+}
+
+function renderSlots(){
+  if(selD===null){document.getElementById('sBtns').innerHTML='';return}
+  let wk=weeks[curWkIdx],sem=wk.t;
+  let gSched=selG==="B2GATL1"?G1:G2;
+  document.getElementById('sBtns').innerHTML=H.map((h,i)=>{
+    let hasClass=gSched.some(s=>s[0]===selD&&s[1]===i&&(s[4]==="AB"||s[4]===sem));
+    let isCur=false;
+    let now=new Date();let nowD=now.getDay()-1;
+    if(nowD===selD){let m=now.getHours()*60+now.getMinutes();let sm=[510,570,630,690,840,900,960,1020];if(m>=sm[i]&&m<sm[i]+60)isCur=true}
+    return`<button class="sb${selH===i?' on':''}${!hasClass?' off':''}${isCur?' now':''}" onclick="${!hasClass?'':'selH='+i+';render()'}">${h}</button>`;
+  }).join('');
+}
+
+function gatlAt(sched,d,h,sem){return sched.filter(s=>s[0]===d&&s[1]===h&&(s[4]==="AB"||s[4]===sem))}
+function tSlots(t,d,h,sem){return t.s.filter(s=>s[0]===d&&s[1]===h&&(s[5]==="AB"||s[5]===sem))}
+
+function getOK(tid,d,h,sem){return localStorage.getItem(`g_ok_${tid}_${d}_${h}_${sem}`)==="1"}
+function setOK(tid,d,h,sem,v){localStorage.setItem(`g_ok_${tid}_${d}_${h}_${sem}`,v?"1":"0")}
+
+function render(){
+  renderWk();renderGS();renderDays();renderSlots();
+  let gBox=document.getElementById('gatlBox'),res=document.getElementById('res'),
+      cntBar=document.getElementById('cntBar'),fltBox=document.getElementById('fltBox');
+  if(selD===null||selH===null){
+    gBox.innerHTML='';res.innerHTML='<div class="empty-msg"><span class="ei">&#128073;</span>Selectionnez un jour et un creneau</div>';
+    cntBar.innerHTML='';fltBox.style.display='none';return;
+  }
+  let wk=weeks[curWkIdx],sem=wk.t;
+  if(isVac(wk)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127796;</span>Vacances scolaires</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
+  if(isFerie(wk,selD)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127881;</span>Jour ferie</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
+  if(isGATLPFMP(wk)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127891;</span>B2GATL1 et B2GATL2 en PFMP<br>Pas de deplacement necessaire</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
+
+  let gSched=selG==="B2GATL1"?G1:G2,oSched=selG==="B2GATL1"?G2:G1,oName=selG==="B2GATL1"?"B2GATL2":"B2GATL1";
+  let gSlots=gatlAt(gSched,selD,selH,sem);
+  let oSlots=gatlAt(oSched,selD,selH,sem);
+
+  let gh='<div class="box" style="padding:9px 12px">';
+  if(gSlots.length>0){
+    let gs=gSlots[0];
+    gh+=`<div class="gi act"><span>&#128218;</span><div><strong>${selG}</strong> en cours : ${gs[2]} (${gs[3]})</div></div>`;
+    // Check regroupement
+    if(oSlots.length>0){
+      let os=oSlots[0];
+      let sameRoom=gs[3]===os[3]&&gs[2]===os[2];
+      if(sameRoom||gs[2]===os[2]){
+        gh+=`<div class="gi grp"><span>&#9888;&#65039;</span><div><strong>Regroupe !</strong> ${selG} et ${oName} ensemble (${os[2]})</div></div>`;
+      }else{
+        gh+=`<div class="gi act"><span>&#128218;</span><div><strong>${oName}</strong> aussi en cours : ${os[2]} (${os[3]})</div></div>`;
+      }
+    }
+  }else{
+    gh+=`<div class="gi no"><span>&#128164;</span><strong>${selG}</strong> n'a pas cours</div>`;
+  }
+  gh+='</div>';
+  gBox.innerHTML=gh;
+
+  if(gSlots.length===0){
+    res.innerHTML=`<div class="empty-msg"><span class="ei">&#128164;</span>${selG} n'a pas cours a ce creneau<br>Pas de deplacement possible</div>`;
+    cntBar.innerHTML='';fltBox.style.display='none';return;
+  }
+
+  // Find available teachers
+  let avail=[];
+  let formations=getFormation(wk,selD);
+  let formTeacherIds=formations.map(f=>f.t);
+
+  T.forEach(t=>{
+    if(formTeacherIds.includes(t.id))return; // en formation
+    let slots=tSlots(t,selD,selH,sem);
+    if(slots.length===0)return;
+    let sl=slots[0];
+    if(sl[6])return; // teaches GATL at this slot
+    let cls=sl[2],salle=sl[3],mat=sl[4];
+    let ok=getOK(t.id,selD,selH,sem);
+    let pfmp=isClassPFMP(cls,wk);
+    avail.push({id:t.id,nom:t.nom,cls,salle,mat,ok,pfmp});
+  });
+
+  if(avail.length===0){
+    res.innerHTML='<div class="empty-msg"><span class="ei">&#128533;</span>Aucun collegue disponible a ce creneau</div>';
+    cntBar.innerHTML='';fltBox.style.display='none';return;
+  }
+
+  avail.sort((a,b)=>a.ok===b.ok?0:a.ok?-1:1);
+  let cv=avail.filter(a=>a.ok).length,cn=avail.length-cv;
+  fltBox.style.display='block';
+  cntBar.innerHTML=`<span class="cp cv">&#128077; ${cv} valide${cv>1?'s':''}</span><span class="cp cn">${cn} non configure${cn>1?'s':''}</span>`;
+
+  let filtered=curFlt==='all'?avail:curFlt==='v'?avail.filter(a=>a.ok):avail.filter(a=>!a.ok);
+  if(filtered.length===0){res.innerHTML='<div class="empty-msg">Aucun resultat pour ce filtre</div>';return}
+
+  res.innerHTML=filtered.map(a=>{
+    let icon=a.cls.match(/^[3-6]/)?'&#127979;':'&#128188;';
+    return`<div class="rc ${a.ok?'v':'nv'}">
+      <div class="rn"><span>${emojiFor(a.id)} ${a.nom}</span><span class="thumb">${a.ok?'&#128077;':''}</span></div>
+      <div class="rcl"><div class="ci">${icon}</div><div><div class="cn2">${a.cls}${a.pfmp?'<span class="pfmp-tag">PFMP</span>':''}</div><div class="cm">${a.mat}</div></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="rs${a.salle?'':' empty'}">&#128205; ${a.salle||'Salle non renseignee'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setF(f,btn){curFlt=f;document.querySelectorAll('.flt button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');render()}
+
+// ============= CONFIG =============
+function renderCfgList(){
+  let el=document.getElementById('cfgList'),det=document.getElementById('cfgDetail');
+  det.innerHTML='';det.className='';
+  let html='<div class="box"><div class="lbl">Choisissez votre enseignement</div>';
+  T.forEach(t=>{
+    let total=t.s.filter(s=>!s[6]).length;
+    let ok=0;
+    t.s.filter(s=>!s[6]).forEach(s=>{
+      ["A","B"].forEach(sem=>{if((s[5]==="AB"||s[5]===sem)&&getOK(t.id,s[0],s[1],sem))ok++});
+    });
+    html+=`<button class="ct-btn" onclick="openCfg('${t.id}')">
+      <div class="tn">${emojiFor(t.id)} ${t.nom}</div>
+      <div class="ts">${t.mat}</div>
+      <div class="tr">&#128077; ${ok} creneaux valides</div>
+    </button>`;
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function openCfg(tid){
+  let t=T.find(x=>x.id===tid);
+  document.getElementById('cfgList').innerHTML='';
+  let det=document.getElementById('cfgDetail');
+  let wk=weeks[curWkIdx],sem=wk.t;
+
+  let html=`<button class="back-btn" onclick="renderCfgList()">&#8592; Retour</button>
+  <div class="box"><div class="lbl">${emojiFor(t.id)} ${t.nom} — ${t.mat}</div>
+  <div class="wk-nav" style="margin-bottom:10px">
+    <button onclick="chgCfgWk(-1,'${tid}')">&lsaquo;</button>
+    <div class="wk-label"><div class="wt" id="cfgWkT">Semaine ${sem}</div><div class="wd" id="cfgWkD">${fmtD(wk.mon)} au ${fmtD(wk.fri)}</div></div>
+    <button onclick="chgCfgWk(1,'${tid}')">&rsaquo;</button>
+  </div>
+  <p style="font-size:.76em;color:#666;margin-bottom:8px;line-height:1.3">
+    Appuyez sur le pouce pour valider un creneau. La classe que vous avez est indiquee. Vous pouvez naviguer entre les semaines.
+  </p>`;
+
+  let nonGatl=t.s.filter(s=>!s[6]&&(s[5]==="AB"||s[5]===sem));
+  let byDay={};
+  nonGatl.forEach(s=>{if(!byDay[s[0]])byDay[s[0]]=[];byDay[s[0]].push(s)});
+
+  for(let di=0;di<5;di++){
+    if(!byDay[di]||byDay[di].length===0)continue;
+    let dayFerie=isFerie(wk,di);
+    html+=`<div class="cdt">${D[di]}${dayFerie?' — <span style="color:#c62828">FERIE</span>':''}</div>`;
+    byDay[di].sort((a,b)=>a[1]-b[1]);
+    byDay[di].forEach(s=>{
+      let ok=getOK(tid,s[0],s[1],sem);
+      let pfmp=isClassPFMP(s[2],wk);
+      let formations=getFormation(wk,di);
+      let inFormation=formations.some(f=>f.t===tid);
+      html+=`<div class="cs">
+        <div class="si">
+          <div class="st">${H[s[1]]}</div>
+          <div class="sc">${s[2]}${pfmp?' <span class="pfmp-note">PFMP</span>':''}</div>
+          <div class="sr">&#128205; ${s[3]}</div>
+          ${inFormation?'<div class="pfmp-note">En formation</div>':''}
+        </div>
+        <button class="tb${ok?' on':''}" onclick="toggleOK('${tid}',${s[0]},${s[1]},'${sem}',this)"${dayFerie||inFormation?' disabled':''}>${ok?'&#128077;':'&#128078;'}</button>
+      </div>`;
+    });
+  }
+  html+='</div>';
+  det.innerHTML=html;
+}
+
+function chgCfgWk(dir,tid){curWkIdx=Math.max(0,Math.min(weeks.length-1,curWkIdx+dir));openCfg(tid)}
+
+function toggleOK(tid,d,h,sem,btn){
+  let cur=getOK(tid,d,h,sem);
+  setOK(tid,d,h,sem,!cur);
+  btn.classList.toggle('on');
+  btn.innerHTML=!cur?'&#128077;':'&#128078;';
+  showToast();
+}
+
+function showToast(){let t=document.getElementById('toast');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',1000)}
+
+// ============= AUTO-DETECT =============
+function autoDetect(){
+  let now=new Date();
+  // Find current week
+  for(let i=0;i<weeks.length;i++){
+    if(now>=weeks[i].mon&&now<=weeks[i].fri){curWkIdx=i;break}
+    if(now<weeks[i].mon){curWkIdx=Math.max(0,i);break}
+  }
+  let di=now.getDay()-1;
+  if(di>=0&&di<=4)selD=di;else selD=0;
+  let m=now.getHours()*60+now.getMinutes();
+  let sm=[510,570,630,690,840,900,960,1020];
+  for(let i=0;i<sm.length;i++){if(m>=sm[i]&&m<sm[i]+60){selH=i;break}}
+  if(selH===null)selH=0;
+}
+
+// ============= INIT =============
+autoDetect();
+render();
+</script>
+</body>
+</html>
