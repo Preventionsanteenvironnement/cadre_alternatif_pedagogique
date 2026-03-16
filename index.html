@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadre pedagogique alternatif B2GATL</title>
+<title>Cadre p&eacute;dagogique alternatif B2GATL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#333}
@@ -94,7 +94,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <body>
 <div class="hdr">
 <div style="display:flex;justify-content:space-between;align-items:center">
-<div><h1>Cadre pedagogique alternatif</h1><div class="sub">B2GATL — Trouver une salle d'accueil pour un eleve</div></div>
+<div><h1>Cadre p&eacute;dagogique alternatif</h1><div class="sub">B2GATL &mdash; Trouver une salle d'accueil pour un &eacute;l&egrave;ve</div></div>
 </div>
 <div class="tabs">
 <button class="on" onclick="showPg('main',this)">Rechercher</button>
@@ -107,22 +107,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="wk-nav"><button onclick="chgWk(-1)">&lsaquo;</button><div class="wk-label"><div class="wt" id="wkType"></div><div class="wd" id="wkDates"></div></div><button onclick="chgWk(1)">&rsaquo;</button></div>
 <div id="wkAlerts"></div></div>
 
-<div class="box"><div class="lbl">Eleve issu de</div><div class="gs" id="gsBtns"></div></div>
+<div class="box"><div class="lbl">&Eacute;l&egrave;ve issu de</div><div class="gs" id="gsBtns"></div></div>
 <div class="box"><div class="lbl">Jour</div><div class="ds" id="dBtns"></div></div>
-<div class="box"><div class="lbl">Creneau</div><div class="ss" id="sBtns"></div></div>
+<div class="box"><div class="lbl">Cr&eacute;neau</div><div class="ss" id="sBtns"></div></div>
 <div id="gatlBox"></div>
-<div id="fltBox" style="display:none"><div class="box" style="padding:9px 12px"><div class="lbl">Filtrer</div><div class="flt"><button class="fa on" onclick="setF('all',this)">Tous</button><button class="fv" onclick="setF('v',this)">Valides</button><button class="fn" onclick="setF('nv',this)">Non configures</button></div></div></div>
+<div id="fltBox" style="display:none"><div class="box" style="padding:9px 12px"><div class="lbl">Filtrer</div><div class="flt"><button class="fa on" onclick="setF('all',this)">Tous</button><button class="fv" onclick="setF('v',this)">Valid&eacute;s</button><button class="fn" onclick="setF('nv',this)">Non configur&eacute;s</button></div></div></div>
 <div id="cntBar" class="cbar"></div>
 <div id="res"></div>
-<div class="info">Aucune donnee personnelle collectee. Stockage local navigateur. RGPD.</div>
+<div class="info">Aucune donn&eacute;e personnelle collect&eacute;e. Stockage local navigateur. Conforme RGPD.</div>
 </div></div>
 
 <div class="pg" id="pgConfig"><div class="c">
 <div id="cfgList"></div><div id="cfgDetail"></div>
-<div class="info">Modifications enregistrees automatiquement dans votre navigateur.</div>
+<div class="info">Modifications enregistr&eacute;es automatiquement dans votre navigateur.</div>
 </div></div>
 
-<div class="toast" id="toast">Enregistre !</div>
+<div class="toast" id="toast">Enregistr&eacute; !</div>
 
 <script>
 const D=["Lundi","Mardi","Mercredi","Jeudi","Vendredi"],DL=["Lun","Mar","Mer","Jeu","Ven"];
@@ -145,7 +145,7 @@ const PFMP=[
 {c:["C1JP"],s:"2026-06-08",e:"2026-06-28"},
 {c:["C1HORT"],s:"2026-06-08",e:"2026-06-28"}
 ];
-const FORMATIONS=[{t:"mecheri",d:"2026-03-20",desc:"Prof. PSE en formation"}];
+const FORMATIONS=[{t:"mecheri",d:"2026-03-20",desc:"Prof. PSE en formation (absent)"}];
 
 // B2GATL schedules: [dayIdx, slotIdx, matiere, salle, sem]
 const G1=[
@@ -183,7 +183,7 @@ const G2=[
 
 // Teachers: [dayIdx, slotIdx, classe, salle, matiere, sem, isGATL]
 const T=[
-{id:"bertrand",nom:"Prof. Arts appliques / Plastiques",mat:"Arts appliques / Arts plastiques",s:[
+{id:"bertrand",nom:"Prof. Arts appliqu\u00e9s / Plastiques",mat:"Arts appliqu\u00e9s / Arts plastiques",s:[
 [0,1,"BPSE2","016 Arts","Arts appliques","AB",0],[0,2,"BTMELEC","016 Arts","Arts appliques","AB",0],
 [0,3,"5EA","016 Arts","Arts plastiques","AB",0],[0,5,"6EA","016 Arts","Arts plastiques","AB",0],
 [0,6,"4EA","016 Arts","Arts plastiques","AB",0],[0,7,"TAGORA","016 Arts","Arts appliques","AB",0],
@@ -212,7 +212,7 @@ const T=[
 [4,4,"C2JP","119B","Anglais LV1","AB",0],
 [4,5,"BTAGO2","119B","Anglais LV1","A",0],[4,5,"BTAGO1","119B","Anglais LV1","B",0]
 ]},
-{id:"chaize",nom:"Prof. Ens. Pro GA (BTAGO)",mat:"Ens. Pro Eco-gestion (BTAGO)",s:[
+{id:"chaize",nom:"Prof. Ens. Pro GA (BTAGO)",mat:"Ens. Pro \u00c9co-gestion (BTAGO)",s:[
 [0,1,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],[0,2,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],
 [0,3,"DNL_1AGO","119A","Anglais DNL","B",0],
 [0,4,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],[0,5,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
@@ -238,7 +238,7 @@ const T=[
 [4,0,"CEPS2","Gymnase","EPS","AB",0],[4,1,"CEPS2","Gymnase","EPS","AB",0],
 [4,2,"MEPS1","Gymnase","EPS","AB",0]
 ]},
-{id:"herizi",nom:"Prof. Ens. Pro GA (B1AGO/BTS)",mat:"Ens. Pro Eco-gestion (B1AGO/BTS)",s:[
+{id:"herizi",nom:"Prof. Ens. Pro GA (B1AGO/BTS)",mat:"Ens. Pro \u00c9co-gestion (B1AGO/BTS)",s:[
 [0,4,"BTS","BTS1/BTS2","OPA BTS","AB",0],[0,5,"BTS","BTS1/BTS2","OPA BTS","AB",0],
 [0,6,"BTS","BTS1/BTS2","OPA BTS","AB",0],
 [1,1,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
@@ -253,7 +253,7 @@ const T=[
 [4,1,"BPSE2","122 GA","Projet BCP","AB",0],
 [4,2,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],[4,3,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0]
 ]},
-{id:"ma",nom:"Prof. Ens. Pro GA (B1AGO1)",mat:"Ens. Pro Eco-gestion (B1AGO1/B2GATL2)",s:[
+{id:"ma",nom:"Prof. Ens. Pro GA (B1AGO1)",mat:"Ens. Pro \u00c9co-gestion (B1AGO1/B2GATL2)",s:[
 [1,7,"BPSE2","114","Economie-Droit","AB",0],
 [3,1,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],[3,2,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],
 [3,3,"B1AGO1","120 GA","Ens. Pro Eco-gestion","AB",0],
@@ -275,7 +275,7 @@ const T=[
 [4,2,"CPSE1","118","PSE","AB",0],[4,3,"C1PSR","205 Techno","PSE","AB",0],
 [4,4,"BPSE2","205 Techno","PSE","AB",0],[4,5,"C1CAN","205 Techno","PSE","AB",0]
 ]},
-{id:"minardi",nom:"Prof. Francais (lycee pro)",mat:"Francais",s:[
+{id:"minardi",nom:"Prof. Fran\u00e7ais (lyc\u00e9e pro)",mat:"Fran\u00e7ais",s:[
 [0,1,"B2GATL1","119A","Francais","AB",1],
 [0,2,"BCGEN1","BTS1/BTS2","Culture generale BTS","AB",0],[0,3,"BCGEN1","BTS1/BTS2","Culture generale BTS","AB",0],
 [0,5,"B1MELEC","119A","Francais","AB",0],[0,6,"BTAGO2","119A","Francais","AB",0],
@@ -305,7 +305,7 @@ const T=[
 [4,0,"5EA","111","Espagnol LV2","AB",0],[4,1,"3EB","208","Espagnol LV2","AB",0],
 [4,3,"B2GATL1","114","Espagnol LV2","AB",1]
 ]},
-{id:"mayol",nom:"Prof. Eco-Droit / CEJM",mat:"Eco-Droit / CEJM / Ens. Pro",s:[
+{id:"mayol",nom:"Prof. \u00c9co-Droit / CEJM",mat:"\u00c9co-Droit / CEJM / Ens. Pro",s:[
 [0,0,"BCGEN1","BTS1/BTS2","CEJM","AB",0],[0,1,"BCGEN1","BTS1/BTS2","CEJM","AB",0],
 [0,4,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],[0,5,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],
 [1,1,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
@@ -320,7 +320,7 @@ const T=[
 [4,3,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
 [4,4,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1],[4,5,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1]
 ]},
-{id:"milleret",nom:"Prof. Francais / HG-EMC",mat:"Francais / HG-EMC (college + lycee)",s:[
+{id:"milleret",nom:"Prof. Fran\u00e7ais / HG-EMC",mat:"Fran\u00e7ais / HG-EMC (coll\u00e8ge + lyc\u00e9e)",s:[
 [0,1,"BTMELEC","119B","HG-EMC","AB",0],
 [0,2,"BPSE1","119B","HG-EMC","AB",0],
 [0,3,"BPSE1","119B","HG-EMC","AB",0],
@@ -339,7 +339,7 @@ const T=[
 [4,2,"BTMELEC","119B","HG-EMC","AB",0],
 [4,4,"3EB","208","Francais","AB",0]
 ]},
-{id:"maths",nom:"Prof. Mathematiques",mat:"Mathematiques",s:[
+{id:"maths",nom:"Prof. Math\u00e9matiques",mat:"Math\u00e9matiques",s:[
 [0,4,"B2GATL1","114","Mathematiques","AB",1],
 [0,5,"3EA","207","Mathematiques","AB",0],
 [0,6,"BPSE1","114","Co-ens Mathematiques","A",1],
@@ -424,10 +424,10 @@ function renderWk(){
   document.getElementById('wkType').textContent="Semaine "+wk.t;
   document.getElementById('wkDates').textContent=fmtD(wk.mon)+" au "+fmtD(wk.fri)+" "+wk.mon.getFullYear();
   let alerts="";
-  if(isVac(wk))alerts+='<div class="wk-alert vac">Vacances scolaires — pas de cours</div>';
-  if(isGATLPFMP(wk))alerts+='<div class="wk-alert pfmp">B2GATL1 et B2GATL2 en PFMP — pas de deplacement necessaire</div>';
+  if(isVac(wk))alerts+='<div class="wk-alert vac">Vacances scolaires \u2014 pas de cours</div>';
+  if(isGATLPFMP(wk))alerts+='<div class="wk-alert pfmp">B2GATL1 et B2GATL2 en PFMP &mdash; pas d\u2019accueil alternatif n\u00e9cessaire</div>';
   // Check feries this week
-  for(let i=0;i<5;i++){if(isFerie(wk,i))alerts+='<div class="wk-alert fer">'+D[i]+' : jour ferie</div>'}
+  for(let i=0;i<5;i++){if(isFerie(wk,i))alerts+='<div class="wk-alert fer">'+D[i]+' : jour f\u00e9ri\u00e9</div>'}
   // Formations
   for(let i=0;i<5;i++){let fs=getFormation(wk,i);for(let f of fs)alerts+='<div class="wk-alert form">'+D[i]+' : '+f.desc+'</div>'}
   document.getElementById('wkAlerts').innerHTML=alerts;
@@ -475,13 +475,13 @@ function render(){
   let gBox=document.getElementById('gatlBox'),res=document.getElementById('res'),
       cntBar=document.getElementById('cntBar'),fltBox=document.getElementById('fltBox');
   if(selD===null||selH===null){
-    gBox.innerHTML='';res.innerHTML='<div class="empty-msg"><span class="ei">&#128073;</span>Selectionnez un jour et un creneau</div>';
+    gBox.innerHTML='';res.innerHTML='<div class="empty-msg"><span class="ei">&#128073;</span>S\u00e9lectionnez un jour et un cr\u00e9neau</div>';
     cntBar.innerHTML='';fltBox.style.display='none';return;
   }
   let wk=weeks[curWkIdx],sem=wk.t;
   if(isVac(wk)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127796;</span>Vacances scolaires</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
-  if(isFerie(wk,selD)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127881;</span>Jour ferie</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
-  if(isGATLPFMP(wk)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127891;</span>B2GATL1 et B2GATL2 en PFMP<br>Pas de deplacement necessaire</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
+  if(isFerie(wk,selD)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127881;</span>Jour f\u00e9ri\u00e9</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
+  if(isGATLPFMP(wk)){res.innerHTML='<div class="empty-msg"><span class="ei">&#127891;</span>B2GATL1 et B2GATL2 en PFMP<br>Pas d\u2019accueil alternatif n\u00e9cessaire</div>';gBox.innerHTML='';cntBar.innerHTML='';fltBox.style.display='none';return}
 
   let gSched=selG==="B2GATL1"?G1:G2,oSched=selG==="B2GATL1"?G2:G1,oName=selG==="B2GATL1"?"B2GATL2":"B2GATL1";
   let gSlots=gatlAt(gSched,selD,selH,sem);
@@ -496,7 +496,7 @@ function render(){
       let os=oSlots[0];
       let sameRoom=gs[3]===os[3]&&gs[2]===os[2];
       if(sameRoom||gs[2]===os[2]){
-        gh+=`<div class="gi grp"><span>&#9888;&#65039;</span><div><strong>Regroupe !</strong> ${selG} et ${oName} ensemble (${os[2]})</div></div>`;
+        gh+=`<div class="gi grp"><span>&#9888;&#65039;</span><div><strong>Regroup\u00e9 !</strong> ${selG} et ${oName} ensemble (${os[2]})</div></div>`;
       }else{
         gh+=`<div class="gi act"><span>&#128218;</span><div><strong>${oName}</strong> aussi en cours : ${os[2]} (${os[3]})</div></div>`;
       }
@@ -508,7 +508,7 @@ function render(){
   gBox.innerHTML=gh;
 
   if(gSlots.length===0){
-    res.innerHTML=`<div class="empty-msg"><span class="ei">&#128164;</span>${selG} n'a pas cours a ce creneau<br>Pas de deplacement possible</div>`;
+    res.innerHTML=`<div class="empty-msg"><span class="ei">&#128164;</span>${selG} n\u2019a pas cours \u00e0 ce cr\u00e9neau<br>Pas d\u2019accueil alternatif possible</div>`;
     cntBar.innerHTML='';fltBox.style.display='none';return;
   }
 
@@ -530,17 +530,17 @@ function render(){
   });
 
   if(avail.length===0){
-    res.innerHTML='<div class="empty-msg"><span class="ei">&#128533;</span>Aucun collegue disponible a ce creneau</div>';
+    res.innerHTML='<div class="empty-msg"><span class="ei">&#128533;</span>Aucun coll\u00e8gue disponible \u00e0 ce cr\u00e9neau</div>';
     cntBar.innerHTML='';fltBox.style.display='none';return;
   }
 
   avail.sort((a,b)=>a.ok===b.ok?0:a.ok?-1:1);
   let cv=avail.filter(a=>a.ok).length,cn=avail.length-cv;
   fltBox.style.display='block';
-  cntBar.innerHTML=`<span class="cp cv">&#128077; ${cv} valide${cv>1?'s':''}</span><span class="cp cn">${cn} non configure${cn>1?'s':''}</span>`;
+  cntBar.innerHTML=`<span class="cp cv">&#128077; ${cv} valid\u00e9${cv>1?'s':''}</span><span class="cp cn">${cn} non configur\u00e9${cn>1?'s':''}</span>`;
 
   let filtered=curFlt==='all'?avail:curFlt==='v'?avail.filter(a=>a.ok):avail.filter(a=>!a.ok);
-  if(filtered.length===0){res.innerHTML='<div class="empty-msg">Aucun resultat pour ce filtre</div>';return}
+  if(filtered.length===0){res.innerHTML='<div class="empty-msg">Aucun r\u00e9sultat pour ce filtre</div>';return}
 
   res.innerHTML=filtered.map(a=>{
     let icon=a.cls.match(/^[3-6]/)?'&#127979;':'&#128188;';
@@ -548,7 +548,7 @@ function render(){
       <div class="rn"><span>${emojiFor(a.id)} ${a.nom}</span><span class="thumb">${a.ok?'&#128077;':''}</span></div>
       <div class="rcl"><div class="ci">${icon}</div><div><div class="cn2">${a.cls}${a.pfmp?'<span class="pfmp-tag">PFMP</span>':''}</div><div class="cm">${a.mat}</div></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <div class="rs${a.salle?'':' empty'}">&#128205; ${a.salle||'Salle non renseignee'}</div>
+        <div class="rs${a.salle?'':' empty'}">&#128205; ${a.salle||'Salle non renseign\u00e9e'}</div>
       </div>
     </div>`;
   }).join('');
@@ -570,7 +570,7 @@ function renderCfgList(){
     html+=`<button class="ct-btn" onclick="openCfg('${t.id}')">
       <div class="tn">${emojiFor(t.id)} ${t.nom}</div>
       <div class="ts">${t.mat}</div>
-      <div class="tr">&#128077; ${ok} creneaux valides</div>
+      <div class="tr">&#128077; ${ok} cr\u00e9neaux valid\u00e9s</div>
     </button>`;
   });
   html+='</div>';
@@ -584,14 +584,14 @@ function openCfg(tid){
   let wk=weeks[curWkIdx],sem=wk.t;
 
   let html=`<button class="back-btn" onclick="renderCfgList()">&#8592; Retour</button>
-  <div class="box"><div class="lbl">${emojiFor(t.id)} ${t.nom} — ${t.mat}</div>
+  <div class="box"><div class="lbl">${emojiFor(t.id)} ${t.nom} \u2014 ${t.mat}</div>
   <div class="wk-nav" style="margin-bottom:10px">
     <button onclick="chgCfgWk(-1,'${tid}')">&lsaquo;</button>
     <div class="wk-label"><div class="wt" id="cfgWkT">Semaine ${sem}</div><div class="wd" id="cfgWkD">${fmtD(wk.mon)} au ${fmtD(wk.fri)}</div></div>
     <button onclick="chgCfgWk(1,'${tid}')">&rsaquo;</button>
   </div>
   <p style="font-size:.76em;color:#666;margin-bottom:8px;line-height:1.3">
-    Appuyez sur le pouce pour valider un creneau. La classe que vous avez est indiquee. Vous pouvez naviguer entre les semaines.
+    Appuyez sur le pouce pour valider un cr\u00e9neau. La classe que vous avez est indiqu\u00e9e. Vous pouvez naviguer entre les semaines.
   </p>`;
 
   let nonGatl=t.s.filter(s=>!s[6]&&(s[5]==="AB"||s[5]===sem));
@@ -601,7 +601,7 @@ function openCfg(tid){
   for(let di=0;di<5;di++){
     if(!byDay[di]||byDay[di].length===0)continue;
     let dayFerie=isFerie(wk,di);
-    html+=`<div class="cdt">${D[di]}${dayFerie?' — <span style="color:#c62828">FERIE</span>':''}</div>`;
+    html+=`<div class="cdt">${D[di]}${dayFerie?' \u2014 <span style="color:#c62828">F\u00c9RI\u00c9</span>':''}</div>`;
     byDay[di].sort((a,b)=>a[1]-b[1]);
     byDay[di].forEach(s=>{
       let ok=getOK(tid,s[0],s[1],sem);
