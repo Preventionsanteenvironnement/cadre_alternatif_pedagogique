@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide — Cadre pedagogique alternatif</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#333;min-height:100vh}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:20px;text-align:center}
+.hdr h1{font-size:1.3em;font-weight:700}.hdr .sub{font-size:.8em;opacity:.7;margin-top:4px}
+
+/* CONTAINER */
+.c{max-width:640px;margin:0 auto;padding:16px}
+
+/* INTRO */
+.intro{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.intro .icon{font-size:3em;margin-bottom:10px}
+.intro h2{font-size:1.1em;color:#1a237e;margin-bottom:8px}
+.intro p{font-size:.88em;color:#555;line-height:1.5}
+
+/* SCENARIO */
+.scene{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ffb74d;border-radius:14px;padding:18px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.scene .tag{display:inline-block;padding:3px 12px;border-radius:15px;background:#e65100;color:#fff;font-size:.72em;font-weight:700;margin-bottom:10px;letter-spacing:.5px}
+.scene h3{font-size:1em;color:#bf360c;margin-bottom:8px}
+.scene p{font-size:.85em;color:#4e342e;line-height:1.6}
+.scene .highlight{background:#fff;border-radius:8px;padding:10px 14px;margin-top:10px;border-left:4px solid #e65100;font-size:.83em;color:#333}
+
+/* SECTION */
+.section{margin-bottom:10px}
+.section-title{display:flex;align-items:center;gap:8px;padding:12px 16px;background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:12px;margin-bottom:12px;cursor:pointer}
+.section-title .num{width:32px;height:32px;border-radius:50%;background:#1a237e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9em;flex-shrink:0}
+.section-title h3{font-size:.95em;color:#1a237e;flex:1}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.step{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #e8eaf6;opacity:0;transform:translateY(20px);transition:all .4s ease}
+.step.visible{opacity:1;transform:translateY(0)}
+.step .step-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.step .step-num{width:28px;height:28px;border-radius:50%;background:#1a237e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78em;flex-shrink:0}
+.step .step-label{font-weight:700;font-size:.88em;color:#1a237e}
+.step .step-desc{font-size:.83em;color:#555;line-height:1.5;margin-bottom:10px}
+
+/* MOCK UI */
+.mock{background:#f5f5f5;border-radius:10px;padding:12px;border:1.5px solid #e0e0e0;position:relative;overflow:hidden}
+.mock::before{content:"Apercu";position:absolute;top:4px;right:8px;font-size:.6em;color:#aaa;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.mock-row{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.mock-btn{padding:7px 14px;border-radius:9px;font-size:.78em;font-weight:600;border:2px solid #e0e0e0;background:#fff;color:#666;text-align:center;flex:1;min-width:60px}
+.mock-btn.active{background:#1a237e;color:#fff;border-color:#1a237e}
+.mock-btn.highlight-btn{border-color:#e65100;background:#fff3e0;color:#e65100;animation:pulse 1.5s infinite}
+.mock-btn.green{border-color:#2e7d32;background:#e8f5e9;color:#1b5e20}
+.mock-btn.red{border-color:#d32f2f;background:#ffebee;color:#c62828}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(230,81,0,.3)}50%{box-shadow:0 0 0 6px rgba(230,81,0,0)}}
+
+.mock-card{background:#fff;border-radius:9px;padding:10px 12px;border:1px solid #e0e0e0;margin-bottom:6px}
+.mock-card.validated{border-left:4px solid #2e7d32;background:linear-gradient(135deg,#f1f8e9,#e8f5e9)}
+.mock-card .mc-name{font-weight:700;font-size:.83em;color:#212121;margin-bottom:3px}
+.mock-card .mc-class{font-size:.78em;color:#1a237e;font-weight:600}
+.mock-card .mc-room{font-size:.75em;color:#0d47a1;margin-top:2px}
+.mock-card .mc-thumb{float:right;font-size:1.1em}
+
+/* ARROW */
+.arrow{text-align:center;font-size:1.5em;color:#1a237e;padding:4px 0;opacity:0;transition:opacity .3s}
+.arrow.visible{opacity:1}
+
+/* THUMB DEMO */
+.thumb-demo{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px;background:#f5f5f5;border-radius:10px;margin-top:8px}
+.thumb-btn{width:48px;height:48px;border-radius:50%;border:2.5px solid #e0e0e0;background:#fff;font-size:1.5em;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.thumb-btn.on{border-color:#2e7d32;background:#e8f5e9;transform:scale(1.1)}
+.thumb-btn:hover{transform:scale(1.1)}
+.thumb-label{font-size:.82em;color:#666;font-weight:600}
+
+/* CTA */
+.cta{text-align:center;padding:24px;margin:20px 0}
+.cta a{display:inline-block;padding:14px 40px;background:linear-gradient(135deg,#1a237e,#283593);color:#fff;text-decoration:none;border-radius:30px;font-size:1em;font-weight:700;box-shadow:0 4px 15px rgba(26,35,126,.3);transition:.2s}
+.cta a:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,35,126,.4)}
+.cta .cta-sub{margin-top:8px;font-size:.78em;color:#888}
+
+/* TIPS */
+.tips{background:#e3f2fd;border:1.5px solid #90caf9;border-radius:12px;padding:16px;margin-bottom:16px}
+.tips h3{font-size:.88em;color:#0d47a1;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tips ul{list-style:none;padding:0}
+.tips li{font-size:.82em;color:#1565c0;padding:4px 0;padding-left:18px;position:relative;line-height:1.4}
+.tips li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:#42a5f5}
+
+/* FOOTER */
+.footer{text-align:center;padding:16px;font-size:.72em;color:#999;line-height:1.5}
+
+/* PROGRESS BAR */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:#e65100;z-index:100;transition:width .3s}
+
+/* TABS MOCK */
+.mock-tabs{display:flex;background:rgba(0,0,0,.08);border-radius:8px;overflow:hidden;margin-bottom:8px}
+.mock-tabs div{flex:1;padding:7px;text-align:center;font-size:.76em;font-weight:600;color:#888}
+.mock-tabs div.active{background:rgba(26,35,126,.15);color:#1a237e}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="hdr">
+<h1>Mode d'emploi</h1>
+<div class="sub">Cadre pedagogique alternatif — B2GATL</div>
+</div>
+
+<div class="c">
+
+<!-- INTRO -->
+<div class="intro">
+<div class="icon">&#128218;</div>
+<h2>Comment utiliser l'outil ?</h2>
+<p>Ce guide vous montre, pas a pas, comment trouver une salle d'accueil pour un eleve et comment configurer vos disponibilites. C'est simple, rapide, et ca prend 2 minutes.</p>
+</div>
+
+<!-- SCENARIO -->
+<div class="scene">
+<div class="tag">SITUATION</div>
+<h3>Voici la scene...</h3>
+<p>Nous sommes <strong>lundi a 9h30</strong>, en <strong>semaine A</strong>. Vous etes en cours avec les <strong>B2GATL1</strong>. Un eleve perturbe fortement le cours. Vous devez le deplacer temporairement dans une autre classe, chez un collegue qui a accepte de l'accueillir.</p>
+<div class="highlight">
+&#127919; <strong>Objectif</strong> : trouver en quelques clics quel collegue peut accueillir l'eleve, dans quelle salle et avec quelle classe.
+</div>
+</div>
+
+<!-- ===== PARTIE 1 : RECHERCHER ===== -->
+<div class="section">
+<div class="section-title">
+<div class="num">A</div>
+<h3>Trouver une salle d'accueil</h3>
+</div>
+
+<div class="steps">
+
+<!-- STEP 1 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">1</div>
+<div class="step-label">Ouvrez l'outil et allez dans "Rechercher"</div>
+</div>
+<div class="step-desc">Quand vous ouvrez l'outil, vous etes directement sur l'onglet <strong>Rechercher</strong>. L'outil detecte automatiquement la semaine en cours et le creneau actuel.</div>
+<div class="mock">
+<div class="mock-tabs">
+<div class="active">&#128270; Rechercher</div>
+<div>&#9881;&#65039; Configurer</div>
+</div>
+<div style="text-align:center;padding:6px;font-weight:700;color:#1a237e;font-size:.88em">Semaine A</div>
+<div style="text-align:center;font-size:.75em;color:#888">16/3 au 20/3 2026</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- STEP 2 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">2</div>
+<div class="step-label">Selectionnez la classe de l'eleve</div>
+</div>
+<div class="step-desc">L'eleve vient des <strong>B2GATL1</strong> ? Appuyez sur le bouton correspondant.</div>
+<div class="mock">
+<div class="mock-row">
+<div class="mock-btn active">B2GATL1</div>
+<div class="mock-btn">B2GATL2</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- STEP 3 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">3</div>
+<div class="step-label">Choisissez le jour</div>
+</div>
+<div class="step-desc">Nous sommes <strong>lundi</strong>, appuyez sur "Lun".</div>
+<div class="mock">
+<div class="mock-row">
+<div class="mock-btn active">Lun</div>
+<div class="mock-btn">Mar</div>
+<div class="mock-btn">Mer</div>
+<div class="mock-btn">Jeu</div>
+<div class="mock-btn">Ven</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- STEP 4 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">4</div>
+<div class="step-label">Choisissez le creneau horaire</div>
+</div>
+<div class="step-desc">Il est <strong>9h30</strong>. Appuyez sur le creneau correspondant. Les creneaux grisees signifient que la classe n'a pas cours a cette heure-la.</div>
+<div class="mock">
+<div class="mock-row">
+<div class="mock-btn">8h30</div>
+<div class="mock-btn highlight-btn">9h30</div>
+<div class="mock-btn">10h30</div>
+<div class="mock-btn">11h30</div>
+</div>
+<div class="mock-row">
+<div class="mock-btn">14h00</div>
+<div class="mock-btn">15h00</div>
+<div class="mock-btn">16h00</div>
+<div class="mock-btn">17h00</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- STEP 5 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">5</div>
+<div class="step-label">Consultez les collegues disponibles</div>
+</div>
+<div class="step-desc">L'outil affiche la liste des collegues qui ont cours a ce moment-la (et qui ne sont pas deja avec une classe GATL). Ceux avec un <strong>&#128077;</strong> ont <strong>valide</strong> qu'ils acceptent d'accueillir un eleve.</div>
+<div class="mock">
+<div style="display:flex;gap:5px;margin-bottom:8px">
+<div class="mock-btn green" style="flex:none;font-size:.72em;padding:4px 10px">&#128077; 2 valides</div>
+<div class="mock-btn" style="flex:none;font-size:.72em;padding:4px 10px">1 non configure</div>
+</div>
+<div class="mock-card validated">
+<div class="mc-thumb">&#128077;</div>
+<div class="mc-name">&#127912; Prof. Arts appliques</div>
+<div class="mc-class">&#128218; BPSE2</div>
+<div class="mc-room">&#128205; 016 Arts</div>
+</div>
+<div class="mock-card validated">
+<div class="mc-thumb">&#128077;</div>
+<div class="mc-name">&#129514; Prof. PSE</div>
+<div class="mc-class">&#128218; C2PSR</div>
+<div class="mc-room">&#128205; 010 PSR</div>
+</div>
+<div class="mock-card">
+<div class="mc-name">&#128200; Prof. Eco-Droit / CEJM</div>
+<div class="mc-class">&#128218; BCGEN1</div>
+<div class="mc-room">&#128205; BTS1/BTS2</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- STEP 6 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">6</div>
+<div class="step-label">Envoyez l'eleve !</div>
+</div>
+<div class="step-desc">Vous voyez que <strong>Prof. Arts appliques</strong> a valide et se trouve en <strong>salle 016 Arts</strong> avec les <strong>BPSE2</strong>. Vous pouvez envoyer l'eleve avec un travail a faire. C'est tout !</div>
+<div class="mock" style="background:#e8f5e9;border-color:#a5d6a7">
+<div style="text-align:center;padding:8px">
+<div style="font-size:2em;margin-bottom:6px">&#9989;</div>
+<div style="font-weight:700;color:#2e7d32;font-size:.9em">L'eleve va en salle 016 Arts</div>
+<div style="font-size:.78em;color:#388e3c;margin-top:4px">Chez Prof. Arts appliques — classe BPSE2</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ===== PARTIE 2 : CONFIGURER ===== -->
+<div class="section">
+<div class="section-title">
+<div class="num">B</div>
+<h3>Configurer vos disponibilites</h3>
+</div>
+
+<div class="steps">
+
+<!-- CONFIG STEP 1 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">1</div>
+<div class="step-label">Allez dans l'onglet "Configurer"</div>
+</div>
+<div class="step-desc">En haut de la page, appuyez sur l'onglet <strong>Configurer</strong>.</div>
+<div class="mock">
+<div class="mock-tabs">
+<div>&#128270; Rechercher</div>
+<div class="active">&#9881;&#65039; Configurer</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- CONFIG STEP 2 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">2</div>
+<div class="step-label">Trouvez votre nom</div>
+</div>
+<div class="step-desc">Vous voyez la liste des enseignants. Trouvez-vous grace a <strong>votre matiere</strong> et cliquez sur votre nom.</div>
+<div class="mock">
+<div class="mock-card" style="border:2px solid #e8eaf6;margin-bottom:4px;cursor:pointer">
+<div class="mc-name">&#127912; Prof. Arts appliques</div>
+<div class="mc-room" style="color:#888">Arts appliques / Arts plastiques</div>
+</div>
+<div class="mock-card highlight-btn" style="margin-bottom:4px;cursor:pointer">
+<div class="mc-name">&#129514; Prof. PSE</div>
+<div class="mc-room" style="color:#888">PSE</div>
+</div>
+<div class="mock-card" style="border:2px solid #e8eaf6;margin-bottom:4px;cursor:pointer">
+<div class="mc-name">&#9997;&#65039; Prof. Francais (lycee pro)</div>
+<div class="mc-room" style="color:#888">Francais</div>
+</div>
+</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- CONFIG STEP 3 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">3</div>
+<div class="step-label">Validez vos creneaux avec le pouce</div>
+</div>
+<div class="step-desc">Vous voyez votre emploi du temps (uniquement les creneaux ou vous n'etes <strong>pas</strong> avec une classe GATL). Pour chaque creneau ou vous <strong>acceptez</strong> d'accueillir un eleve, appuyez sur le pouce pour le passer au vert.</div>
+<div class="mock">
+<div style="font-weight:700;font-size:.8em;color:#1a237e;padding:4px 8px;background:#e8eaf6;border-radius:6px;margin-bottom:6px">Lundi</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:#fff;border-radius:8px;margin-bottom:4px;border:1px solid #eee">
+<div><div style="font-weight:700;font-size:.82em">9h30</div><div style="font-size:.75em;color:#1a237e">C2PSR</div><div style="font-size:.72em;color:#0d47a1">&#128205; 010 PSR</div></div>
+<div style="font-size:1.8em;cursor:pointer" id="demoThumb1" onclick="toggleDemo(this)">&#128078;</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:#e8f5e9;border-radius:8px;margin-bottom:4px;border:1px solid #a5d6a7">
+<div><div style="font-weight:700;font-size:.82em">10h30</div><div style="font-size:.75em;color:#1a237e">C1PSR</div><div style="font-size:.72em;color:#0d47a1">&#128205; 010 PSR</div></div>
+<div style="font-size:1.8em">&#128077;</div>
+</div>
+</div>
+<div style="margin-top:8px;text-align:center;font-size:.78em;color:#666">&#9757; Essayez ! Appuyez sur le pouce ci-dessus</div>
+</div>
+
+<div class="arrow" data-step>&#8595;</div>
+
+<!-- CONFIG STEP 4 -->
+<div class="step" data-step>
+<div class="step-head">
+<div class="step-num">4</div>
+<div class="step-label">C'est enregistre automatiquement !</div>
+</div>
+<div class="step-desc">Pas besoin de cliquer sur "Enregistrer". Chaque fois que vous appuyez sur un pouce, c'est <strong>sauvegarde instantanement</strong> dans votre navigateur. Vous pouvez naviguer entre les semaines avec les fleches.</div>
+<div class="mock" style="background:#e8f5e9;border-color:#a5d6a7">
+<div style="text-align:center;padding:8px">
+<div style="font-size:2em;margin-bottom:4px">&#128190;</div>
+<div style="font-weight:700;color:#2e7d32;font-size:.88em">Enregistre automatiquement</div>
+<div style="font-size:.76em;color:#388e3c;margin-top:3px">Vos choix restent memorises dans votre navigateur</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- TIPS -->
+<div class="tips">
+<h3>&#128161; Bon a savoir</h3>
+<ul>
+<li>L'outil alterne automatiquement entre <strong>semaine A</strong> et <strong>semaine B</strong></li>
+<li>Les <strong>jours feries</strong>, <strong>vacances</strong> et <strong>periodes de PFMP</strong> sont pris en compte</li>
+<li>Vous ne pouvez pas envoyer un eleve chez un collegue qui a deja une classe GATL</li>
+<li>Les classes en <strong>PFMP</strong> sont signalees (l'effectif sera reduit)</li>
+<li>Le filtre "Valides" permet de n'afficher que les collegues qui ont accepte</li>
+<li><strong>Aucune donnee personnelle</strong> n'est collectee (RGPD)</li>
+</ul>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+<a href="index.html">Acceder a l'outil &#8594;</a>
+<div class="cta-sub">Cadre pedagogique alternatif — B2GATL</div>
+</div>
+
+<div class="footer">
+Outil concu pour la Cite Scolaire Rene Pellet<br>
+Aucune donnee personnelle collectee — RGPD
+</div>
+
+</div>
+
+<script>
+// SCROLL ANIMATION
+function animateSteps(){
+  const els=document.querySelectorAll('[data-step]');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+      }
+    });
+  },{threshold:0.2});
+  els.forEach(el=>obs.observe(el));
+}
+
+// PROGRESS BAR
+function updateProgress(){
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  const s=window.scrollY;
+  const p=h>0?(s/h)*100:0;
+  document.getElementById('progressBar').style.width=p+'%';
+}
+
+// DEMO THUMB TOGGLE
+function toggleDemo(el){
+  if(el.innerHTML.includes('128078')){
+    el.innerHTML='&#128077;';
+    el.parentElement.style.background='#e8f5e9';
+    el.parentElement.style.borderColor='#a5d6a7';
+  }else{
+    el.innerHTML='&#128078;';
+    el.parentElement.style.background='#fff';
+    el.parentElement.style.borderColor='#eee';
+  }
+}
+
+window.addEventListener('scroll',updateProgress);
+animateSteps();
+</script>
+</body>
+</html>
