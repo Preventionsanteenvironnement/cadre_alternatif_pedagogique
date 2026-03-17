@@ -1,0 +1,22 @@
+{
+  "name": "Cadre p\u00e9dagogique alternatif B2GATL",
+  "short_name": "Cadre B2GATL",
+  "description": "Trouver une salle d'accueil alternatif pour un \u00e9l\u00e8ve B2GATL",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#1a237e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

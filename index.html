@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cadre p&eacute;dagogique alternatif B2GATL</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a237e">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#333}
@@ -89,6 +92,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tb.on{border-color:#2e7d32;background:#e8f5e9}
 .tb:hover{transform:scale(1.1)}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#2e7d32;color:#fff;padding:9px 22px;border-radius:25px;font-size:.83em;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:200;display:none}
+
+/* ENVOI */
+.send-btn{display:block;width:100%;margin-top:8px;padding:8px;border:2px solid #1a237e;border-radius:9px;background:#e8eaf6;color:#1a237e;font-size:.8em;font-weight:700;cursor:pointer;transition:.15s}
+.send-btn:hover{background:#c5cae9}
+.send-panel{margin-top:8px;padding:12px;background:#f5f5f5;border-radius:10px;border:1.5px solid #e0e0e0}
+.send-panel .sp-lbl{font-size:.72em;font-weight:700;color:#78909c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.sp-btns{display:flex;gap:6px;margin-bottom:8px}
+.sp-btns button{flex:1;padding:8px;border:2px solid #e0e0e0;border-radius:9px;background:#fff;font-size:.78em;font-weight:600;cursor:pointer;transition:.15s}
+.sp-btns button.on{border-color:#1a237e;background:#e8eaf6;color:#1a237e}
+.sp-input{width:100%;padding:7px 10px;border:1.5px solid #ddd;border-radius:7px;font-size:.82em;margin-bottom:8px}
+.sp-input:focus{border-color:#1a237e;outline:none}
+.sp-go{width:100%;padding:10px;border:none;border-radius:9px;background:linear-gradient(135deg,#1a237e,#283593);color:#fff;font-size:.85em;font-weight:700;cursor:pointer;transition:.15s}
+.sp-go:hover{opacity:.9}
+.sp-go:disabled{opacity:.4;cursor:default}
+
+/* ENVOIS ACTIFS */
+.envoi-bar{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:1.5px solid #81c784;border-radius:11px;padding:12px;margin-bottom:9px}
+.envoi-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#fff;border-radius:8px;margin-bottom:5px;border:1px solid #a5d6a7;flex-wrap:wrap}
+.envoi-item:last-child{margin-bottom:0}
+.envoi-info{flex:1;min-width:180px}
+.envoi-info .ei-cls{font-weight:700;font-size:.85em;color:#1b5e20}
+.envoi-info .ei-dest{font-size:.78em;color:#2e7d32}
+.envoi-info .ei-work{font-size:.73em;color:#555;margin-top:2px}
+.envoi-info .ei-time{font-size:.68em;color:#999;margin-top:1px}
+.envoi-confirm{padding:6px 14px;border:2px solid #2e7d32;border-radius:8px;background:#e8f5e9;color:#2e7d32;font-size:.76em;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap}
+.envoi-confirm:hover{background:#c8e6c9}
+.envoi-confirm.done{background:#2e7d32;color:#fff;border-color:#2e7d32;cursor:default}
+.envoi-cancel{padding:6px 10px;border:1.5px solid #e0e0e0;border-radius:8px;background:#fff;color:#999;font-size:.73em;cursor:pointer}
 </style>
 </head>
 <body>
@@ -103,6 +134,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <div class="pg show" id="pgMain"><div class="c">
+<div id="envoisBar"></div>
 <div class="box"><div class="lbl">Semaine</div>
 <div class="wk-nav"><button onclick="chgWk(-1)">&lsaquo;</button><div class="wk-label"><div class="wt" id="wkType"></div><div class="wd" id="wkDates"></div></div><button onclick="chgWk(1)">&rsaquo;</button></div>
 <div id="wkAlerts"></div></div>
@@ -114,16 +146,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div id="fltBox" style="display:none"><div class="box" style="padding:9px 12px"><div class="lbl">Filtrer</div><div class="flt"><button class="fa on" onclick="setF('all',this)">Tous</button><button class="fv" onclick="setF('v',this)">Valid&eacute;s</button><button class="fn" onclick="setF('nv',this)">Non configur&eacute;s</button></div></div></div>
 <div id="cntBar" class="cbar"></div>
 <div id="res"></div>
-<div class="info">Aucune donn&eacute;e personnelle collect&eacute;e. Stockage local navigateur. Conforme RGPD.</div>
+<div class="info">&#9888;&#65039; Pensez &agrave; v&eacute;rifier avec le coll&egrave;gue avant d'envoyer l'&eacute;l&egrave;ve.</div>
+<div class="info">Aucune donn&eacute;e personnelle collect&eacute;e. Stockage partag&eacute; en temps r&eacute;el (Firebase). Conforme RGPD.</div>
 </div></div>
 
 <div class="pg" id="pgConfig"><div class="c">
 <div id="cfgList"></div><div id="cfgDetail"></div>
-<div class="info">Modifications enregistr&eacute;es automatiquement dans votre navigateur.</div>
+<div class="info">Modifications enregistr&eacute;es et partag&eacute;es automatiquement entre tous les coll&egrave;gues.</div>
 </div></div>
 
 <div class="toast" id="toast">Enregistr&eacute; !</div>
+<div id="fbStatus" style="display:none;position:fixed;top:8px;right:8px;padding:4px 10px;border-radius:12px;font-size:.7em;font-weight:600;z-index:300;background:#fff3e0;color:#e65100;border:1px solid #ffcc80">Connexion...</div>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 const D=["Lundi","Mardi","Mercredi","Jeudi","Vendredi"],DL=["Lun","Mar","Mer","Jeu","Ven"];
 const H=["8h30","9h30","10h30","11h30","14h00","15h00","16h00","17h00"];
@@ -152,7 +188,7 @@ const G1=[
 [0,1,"Francais","119A","AB"],[0,2,"HG-EMC","119B","AB"],[0,3,"HG-EMC","119B","AB"],
 [0,4,"Maths","114","AB"],[0,6,"Co-ens Maths","114","A"],[0,6,"Co-ens Francais","119A","B"],
 [0,7,"PSE","205 Techno","AB"],
-[1,0,"Ens. Pro","122 GA","AB"],[1,1,"Ens. Pro","122 GA","AB"],[1,3,"Ens. Pro","122 GA","AB"],
+[1,0,"Ens. Pro","122 GA","AB"],[1,1,"Ens. Pro","122 GA","AB"],[1,2,"Ens. Pro","122 GA","AB"],[1,3,"Ens. Pro","122 GA","AB"],
 [1,4,"Francais","119A","A"],[1,5,"Francais","119A","AB"],
 [1,6,"Ens. Pro","122 GA","AB"],[1,7,"Ens. Pro","122 GA","AB"],
 [2,0,"EPS","Gymnase","AB"],[2,1,"EPS","Gymnase","AB"],
@@ -205,7 +241,7 @@ const T=[
 [2,2,"B2GATL1","123 GA","DNL","A",1],[2,2,"B2GATL2","123 GA","DNL","B",1],
 [2,3,"B2GATL1","119B","Anglais LV1","AB",1],
 [3,0,"BTMELEC","119B","Anglais LV1","AB",0],[3,1,"CPSE1","119B","Anglais LV1","AB",0],
-[3,3,"BPSE1","117","Anglais LV1","AB",0],[3,4,"FCIL","Atelier FCIL","Anglais LV1","AB",0],
+[3,3,"BPSE1","117","Anglais LV1","AB",1],[3,4,"FCIL","Atelier FCIL","Anglais LV1","AB",0],
 [3,5,"C2HORT","118","Anglais LV1","AB",0],[3,6,"BTAGO1","118","Anglais LV1","AB",0],
 [4,0,"B2GATL2","119B","Anglais LV1","AB",1],[4,1,"BTMELEC","119B","Anglais LV1","AB",0],
 [4,2,"C2HORT","119A","Anglais LV1","AB",0],[4,3,"TAGO","119A","Anglais DNL","AB",0],
@@ -216,8 +252,8 @@ const T=[
 [0,1,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],[0,2,"BTAGO1","123 GA","Ens. Pro Eco-gestion","AB",0],
 [0,3,"DNL_1AGO","119A","Anglais DNL","B",0],
 [0,4,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],[0,5,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
-[0,6,"BPSE1","114","Co-ens Maths","A",0],[0,6,"BPSE1","119A","Co-ens Francais","B",0],
-[0,7,"DNL_1AGO","123 GA","Anglais DNL","A",0],
+[0,6,"BPSE1","114","Co-ens Maths","A",1],[0,6,"BPSE1","119A","Co-ens Francais","B",1],
+[0,7,"DNL_1AGO","123 GA","Anglais DNL","A",0],[0,7,"BPSE2","114","Co-ens Maths","B",0],
 [2,0,"BTAGO2","123 GA","Soutien au parcours","A",0],
 [2,2,"B2GATL2","119B","DNL","A",1],[2,2,"B2GATL1","119B","DNL","B",1],
 [2,4,"BTAGO2","123 GA","Ens. Pro Eco-gestion","AB",0],
@@ -232,7 +268,7 @@ const T=[
 [0,3,"TAGORA","Gymnase","EPS","AB",0],
 [1,0,"CEPS4","Gymnase","EPS","AB",0],[1,1,"CEPS4","Gymnase","EPS","AB",0],
 [1,2,"BPSE1","Gymnase","EPS","AB",0],
-[2,0,"BPSE1","Gymnase","EPS","AB",0],[2,1,"BPSE1","Gymnase","EPS","AB",0],
+[2,0,"BPSE1","Gymnase","EPS","AB",1],[2,1,"BPSE1","Gymnase","EPS","AB",1],
 [2,2,"MEPS2","Gymnase","EPS","AB",0],
 [3,0,"TAGORA","Gymnase","EPS","AB",0],[3,1,"TAGORA","Gymnase","EPS","AB",0],
 [4,0,"CEPS2","Gymnase","EPS","AB",0],[4,1,"CEPS2","Gymnase","EPS","AB",0],
@@ -241,12 +277,12 @@ const T=[
 {id:"herizi",nom:"Prof. Ens. Pro GA (B1AGO/BTS)",mat:"Ens. Pro \u00c9co-gestion (B1AGO/BTS)",s:[
 [0,4,"BTS","BTS1/BTS2","OPA BTS","AB",0],[0,5,"BTS","BTS1/BTS2","OPA BTS","AB",0],
 [0,6,"BTS","BTS1/BTS2","OPA BTS","AB",0],
-[1,1,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
+[1,0,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,1,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
 [1,3,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
 [1,6,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],[1,7,"B2GATL1","122 GA","Ens. Pro Eco-gestion","AB",1],
 [2,1,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],[2,2,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],
 [2,3,"B1AGO1","122 GA","Soutien au parcours","AB",0],
-[3,0,"BPSE1","122 GA","Co-ens Francais","A",0],
+[3,0,"BPSE2","122 GA","Co-ens Francais","A",0],
 [3,1,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],[3,2,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],
 [3,3,"B1AGO2","122 GA","Ens. Pro Eco-gestion","AB",0],
 [3,5,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],[3,6,"B1AGO1","122 GA","Ens. Pro Eco-gestion","AB",0],
@@ -263,14 +299,14 @@ const T=[
 [4,4,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1],[4,5,"B2GATL2","124","Ens. Pro Eco-gestion","AB",1]
 ]},
 {id:"mecheri",nom:"Prof. PSE",mat:"PSE",s:[
-[0,1,"C2PSR","010 PSR","PSE","AB",0],[0,2,"C1PSR","010 PSR","PSE","AB",0],
-[0,4,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],[0,5,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],
+[0,1,"C2PSR","010 PSR","PSE","AB",0],[0,2,"C1PSR","010 PSR","PSE","B",0],
+[0,4,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],[0,5,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],[0,6,"C1PSR","010 PSR","Chef d'oeuvre CAP","AB",0],
 [0,7,"B2GATL1/B2GATL2","205 Techno","PSE","AB",1],
 [1,0,"B1MELEC","205 Techno","PSE","AB",0],[1,1,"C2HORT","205 Techno","PSE","AB",0],
 [1,2,"TAGORA","205 Techno","PSE","AB",0],[1,3,"TAGORA","205 Techno","PSE","AB",0],
 [3,0,"B2GATL2","205 Techno","Soutien au parcours","AB",1],
 [3,1,"C2JP","205 Techno","PSE","AB",0],[3,2,"BTMELEC","205 Techno","PSE","AB",0],
-[3,3,"BTMELEC","205 Techno","PSE","AB",0],[3,4,"C1JP","205 Techno","PSE","AB",0],
+[3,3,"BTMELEC","205 Techno","PSE","AB",0],[3,4,"C1JP","205 Techno","PSE","A",0],
 [4,0,"C1JP","118","PSE","AB",0],[4,1,"B2MELEC","118","PSE","AB",0],
 [4,2,"CPSE1","118","PSE","AB",0],[4,3,"C1PSR","205 Techno","PSE","AB",0],
 [4,4,"BPSE2","205 Techno","PSE","AB",0],[4,5,"C1CAN","205 Techno","PSE","AB",0]
@@ -281,9 +317,9 @@ const T=[
 [0,5,"B1MELEC","119A","Francais","AB",0],[0,6,"BTAGO2","119A","Francais","AB",0],
 [0,7,"BTMELEC","119A","Francais","AB",0],
 [1,0,"BTMELEC","119A","Francais","AB",0],[1,1,"BTMELEC","119A","Francais","AB",0],
-[1,2,"BTAGO1","119A","Francais","AB",0],[1,3,"BPSE2","119A","Francais","AB",0],
+[1,2,"BTAGO1","119A","Francais","A",0],[1,3,"BPSE2","119A","Francais","AB",0],
 [1,4,"B2GATL1","119A","Francais","A",1],[1,4,"B2GATL2","119A","Francais","B",1],
-[1,5,"BPSE1","119A","Francais","AB",0],[1,6,"B1MELEC","119A","Francais","AB",0],
+[1,5,"BPSE1","119A","Francais","AB",1],[1,6,"B1MELEC","119A","Francais","AB",0],
 [2,1,"BTAGO1","119A","Francais","AB",0],[2,2,"BTAGO1","119A","Francais","AB",0],
 [2,3,"B1AGO2","119A","Soutien au parcours","AB",0],
 [3,0,"BPSE2","119A","Francais","AB",0],[3,1,"B2GATL2","119A","Francais","AB",1],
@@ -293,14 +329,14 @@ const T=[
 ]},
 {id:"pedrot",nom:"Prof. Espagnol LV2 / FLE",mat:"Espagnol LV2 / FLE",s:[
 [0,1,"B2GATL2","118","Espagnol LV2","AB",1],
-[0,2,"BPSE2","114","Espagnol LV2","AB",0],[0,3,"4EA","112","Espagnol LV2","AB",0],
-[0,4,"3EB","208","Espagnol LV2","AB",0],[0,6,"BTAGO1/BTAGO2","114","Espagnol LV2","AB",0],
+[0,2,"BPSE2","114","Espagnol LV2","A",0],[0,3,"4EA","112","Espagnol LV2","AB",0],
+[0,4,"3EB","208","Espagnol LV2","AB",0],[0,6,"BTAGO1/BTAGO2","114","Espagnol LV2","B",0],
 [1,0,"BTAGO1/BTAGO2","114","Espagnol LV2","AB",0],[1,1,"3EA","207","Espagnol LV2","AB",0],
-[1,2,"BPSE2","114","Espagnol LV2","AB",0],[1,3,"5EA","111","Espagnol LV2","AB",0],
+[1,2,"BPSE2","114","Espagnol LV2","AB",0],[1,3,"5EA","111","Espagnol LV2","A",0],
 [2,1,"5EA","111","Espagnol LV2","AB",0],[2,2,"4EA","112","Espagnol LV2","AB",0],
-[2,3,"3EB","208","Espagnol LV2","AB",0],
+[2,3,"3EB","208","Espagnol LV2","B",0],
 [3,1,"3EA","207","Espagnol LV2","A",0],[3,1,"4EA","112","Espagnol LV2","B",0],
-[3,2,"BPSE1","117","Espagnol LV2","AB",0],[3,3,"FLE","118","FLE","AB",0],
+[3,2,"BPSE1","117","Espagnol LV2","AB",1],[3,3,"FLE","118","FLE","AB",0],
 [3,4,"3EA","207","Espagnol LV2","AB",0],[3,5,"FLE","119B","FLE","AB",0],
 [4,0,"5EA","111","Espagnol LV2","AB",0],[4,1,"3EB","208","Espagnol LV2","AB",0],
 [4,3,"B2GATL1","114","Espagnol LV2","AB",1]
@@ -308,7 +344,7 @@ const T=[
 {id:"mayol",nom:"Prof. \u00c9co-Droit / CEJM",mat:"\u00c9co-Droit / CEJM / Ens. Pro",s:[
 [0,0,"BCGEN1","BTS1/BTS2","CEJM","AB",0],[0,1,"BCGEN1","BTS1/BTS2","CEJM","AB",0],
 [0,4,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],[0,5,"B2GATL2","122 GA","Ens. Pro Eco-gestion","AB",1],
-[1,1,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
+[1,0,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],[1,1,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],[1,2,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
 [1,4,"BTAGO2","120 GA","Economie-Droit","AB",0],
 [1,6,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
 [2,1,"BCGEN1","BTS1/BTS2","CEJM","AB",0],[2,2,"BCGEN1","BTS1/BTS2","CEJM","AB",0],
@@ -316,14 +352,14 @@ const T=[
 [3,3,"BTAGO1","123 GA","Economie-Droit","AB",0],
 [3,4,"B2GATL1","123 GA","Ens. Pro Eco-gestion","AB",1],[3,5,"B2GATL1","123 GA","Ens. Pro Eco-gestion","AB",1],
 [4,0,"B2GATL1","114","Ens. Pro Eco-gestion","AB",1],
-[4,1,"BPSE1","114","Economie-Droit","AB",0],
+[4,1,"BPSE1","114","Economie-Droit","AB",1],
 [4,3,"B2GATL2","120 GA","Ens. Pro Eco-gestion","AB",1],
 [4,4,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1],[4,5,"B2GATL1","120 GA","Ens. Pro Eco-gestion","AB",1]
 ]},
 {id:"milleret",nom:"Prof. Fran\u00e7ais / HG-EMC",mat:"Fran\u00e7ais / HG-EMC (coll\u00e8ge + lyc\u00e9e)",s:[
 [0,1,"BTMELEC","119B","HG-EMC","AB",0],
-[0,2,"BPSE1","119B","HG-EMC","AB",0],
-[0,3,"BPSE1","119B","HG-EMC","AB",0],
+[0,2,"BPSE1","119B","HG-EMC","AB",1],
+[0,3,"BPSE1","119B","HG-EMC","AB",1],
 [1,0,"3EA","207","Francais","AB",0],
 [1,1,"BTAGO2","119B","HG-EMC","AB",0],
 [1,2,"3EB","208","Francais","AB",0],
@@ -467,8 +503,116 @@ function renderSlots(){
 function gatlAt(sched,d,h,sem){return sched.filter(s=>s[0]===d&&s[1]===h&&(s[4]==="AB"||s[4]===sem))}
 function tSlots(t,d,h,sem){return t.s.filter(s=>s[0]===d&&s[1]===h&&(s[5]==="AB"||s[5]===sem))}
 
-function getOK(tid,d,h,sem){return localStorage.getItem(`g_ok_${tid}_${d}_${h}_${sem}`)==="1"}
-function setOK(tid,d,h,sem,v){localStorage.setItem(`g_ok_${tid}_${d}_${h}_${sem}`,v?"1":"0")}
+// ============= FIREBASE =============
+const firebaseConfig={apiKey:"AIzaSyAWdCMvOiAJln3eT9LIAQD3RWJUD0IQcLI",authDomain:"devoirs-pse.firebaseapp.com",databaseURL:"https://devoirs-pse-default-rtdb.europe-west1.firebasedatabase.app",projectId:"devoirs-pse",storageBucket:"devoirs-pse.appspot.com",messagingSenderId:"614730413904",appId:"1:614730413904:web:a5dd478af5de30f6bede55"};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+const okRef=db.ref('cadre_alternatif/ok');
+let okData={};
+let fbReady=false;
+
+okRef.on('value',snap=>{
+  okData=snap.val()||{};
+  fbReady=true;
+  document.getElementById('fbStatus').style.display='none';
+  render();
+},err=>{
+  fbReady=true;
+  document.getElementById('fbStatus').textContent='Firebase : acc\u00e8s refus\u00e9';
+  document.getElementById('fbStatus').style.display='block';
+  document.getElementById('fbStatus').style.background='#fce4ec';
+  document.getElementById('fbStatus').style.color='#c62828';
+  document.getElementById('fbStatus').style.borderColor='#ef9a9a';
+  render();
+});
+
+db.ref('.info/connected').on('value',snap=>{
+  let st=document.getElementById('fbStatus');
+  if(snap.val()===true){st.style.display='none'}
+  else{st.style.display='block';st.textContent='Hors ligne';st.style.background='#fce4ec';st.style.color='#c62828';st.style.borderColor='#ef9a9a'}
+});
+
+function getOK(tid,d,h,sem){return okData[`${tid}_${d}_${h}_${sem}`]===true}
+function setOK(tid,d,h,sem,v){
+  let key=`${tid}_${d}_${h}_${sem}`;
+  if(v){okRef.child(key).set(true)}else{okRef.child(key).remove()}
+}
+
+// ============= ENVOIS =============
+const envoisRef=db.ref('cadre_alternatif/envois');
+let envoisData={};
+
+envoisRef.on('value',snap=>{
+  envoisData=snap.val()||{};
+  renderEnvois();
+},err=>{});
+
+function renderEnvois(){
+  let bar=document.getElementById('envoisBar');
+  if(!bar)return;
+  let today=fmtISO(new Date());
+  let active=Object.entries(envoisData).filter(([k,v])=>v.date===today);
+  if(active.length===0){bar.innerHTML='';return}
+  let html='<div class="envoi-bar"><div class="lbl" style="margin-bottom:6px">&#128232; Accueils en cours aujourd\'hui</div>';
+  active.forEach(([k,v])=>{
+    let heure=H[v.slot]||'';
+    let travTxt=v.travail?'&#128221; Travail donn\u00e9':'&#128214; Travail libre';
+    if(v.detail)travTxt+=' \u2014 '+v.detail;
+    let confBtn=v.confirmed
+      ?'<button class="envoi-confirm done">&#9989; Re\u00e7u</button>'
+      :'<button class="envoi-confirm" onclick="confirmEnvoi(\''+k+'\')">Confirmer r\u00e9ception</button>';
+    html+=`<div class="envoi-item">
+      <div class="envoi-info">
+        <div class="ei-cls">&#127891; \u00c9l\u00e8ve de ${v.cls} \u2192 ${v.toNom}</div>
+        <div class="ei-dest">&#128205; ${v.salle} \u2014 ${D[v.day]} ${heure}</div>
+        <div class="ei-work">${travTxt}</div>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center">
+        ${confBtn}
+        <button class="envoi-cancel" onclick="cancelEnvoi('${k}')">&#10006;</button>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  bar.innerHTML=html;
+}
+
+function confirmEnvoi(key){
+  envoisRef.child(key).update({confirmed:true});
+}
+function cancelEnvoi(key){
+  envoisRef.child(key).remove();
+}
+
+let openSendId=null;
+function toggleSend(tid){
+  openSendId=openSendId===tid?null:tid;
+  render();
+}
+function sendEleve(tid,nom,salle){
+  let wk=weeks[curWkIdx];
+  let panel=document.getElementById('sp_'+tid);
+  let travail=panel.querySelector('.sp-btns .on')?.dataset?.v==='1';
+  let detail=panel.querySelector('.sp-input').value.trim();
+  let data={
+    cls:selG,
+    to:tid,
+    toNom:nom,
+    salle:salle,
+    day:selD,
+    slot:selH,
+    sem:wk.t,
+    date:fmtISO(dateOfDay(wk,selD)),
+    travail:travail,
+    detail:detail,
+    confirmed:false,
+    ts:Date.now()
+  };
+  envoisRef.push(data);
+  openSendId=null;
+  showToast();
+  render();
+}
 
 function render(){
   renderWk();renderGS();renderDays();renderSlots();
@@ -544,12 +688,24 @@ function render(){
 
   res.innerHTML=filtered.map(a=>{
     let icon=a.cls.match(/^[3-6]/)?'&#127979;':'&#128188;';
+    let isOpen=openSendId===a.id;
+    let sendPanel=isOpen?`<div class="send-panel" id="sp_${a.id}">
+      <div class="sp-lbl">L'\u00e9l\u00e8ve arrive avec...</div>
+      <div class="sp-btns">
+        <button class="on" data-v="1" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">&#128221; Travail donn\u00e9</button>
+        <button data-v="0" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">&#128214; Travail libre</button>
+      </div>
+      <input class="sp-input" type="text" placeholder="Pr\u00e9cision (ex: exercice p.42)" maxlength="60">
+      <button class="sp-go" onclick="sendEleve('${a.id}','${a.nom.replace(/'/g,"\\'")}','${a.salle.replace(/'/g,"\\'")}')">&#128232; Envoyer l'\u00e9l\u00e8ve</button>
+    </div>`:'';
     return`<div class="rc ${a.ok?'v':'nv'}">
       <div class="rn"><span>${emojiFor(a.id)} ${a.nom}</span><span class="thumb">${a.ok?'&#128077;':''}</span></div>
       <div class="rcl"><div class="ci">${icon}</div><div><div class="cn2">${a.cls}${a.pfmp?'<span class="pfmp-tag">PFMP</span>':''}</div><div class="cm">${a.mat}</div></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <div class="rs${a.salle?'':' empty'}">&#128205; ${a.salle||'Salle non renseign\u00e9e'}</div>
       </div>
+      ${a.ok?`<button class="send-btn" onclick="toggleSend('${a.id}')">${isOpen?'\u2716 Annuler':'&#128232; Envoyer un \u00e9l\u00e8ve ici'}</button>`:''}
+      ${sendPanel}
     </div>`;
   }).join('');
 }
@@ -615,7 +771,7 @@ function openCfg(tid){
           <div class="sr">&#128205; ${s[3]}</div>
           ${inFormation?'<div class="pfmp-note">En formation</div>':''}
         </div>
-        <button class="tb${ok?' on':''}" onclick="toggleOK('${tid}',${s[0]},${s[1]},'${sem}',this)"${dayFerie||inFormation?' disabled':''}>${ok?'&#128077;':'&#128078;'}</button>
+        <button class="tb${ok?' on':''}" onclick="toggleOK('${tid}',${s[0]},${s[1]},'${sem}',this)"${dayFerie||inFormation?' disabled':''}>${ok?'&#128077;':'&#9898;'}</button>
       </div>`;
     });
   }
@@ -629,7 +785,7 @@ function toggleOK(tid,d,h,sem,btn){
   let cur=getOK(tid,d,h,sem);
   setOK(tid,d,h,sem,!cur);
   btn.classList.toggle('on');
-  btn.innerHTML=!cur?'&#128077;':'&#128078;';
+  btn.innerHTML=!cur?'&#128077;':'&#9898;';
   showToast();
 }
 
@@ -653,7 +809,11 @@ function autoDetect(){
 
 // ============= INIT =============
 autoDetect();
-render();
+document.getElementById('fbStatus').style.display='block';
+render(); // initial render while waiting for Firebase
+
+// ============= PWA =============
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>
 </body>
 </html>
