@@ -507,7 +507,7 @@ function tSlots(t,d,h,sem){return t.s.filter(s=>s[0]===d&&s[1]===h&&(s[5]==="AB"
 const firebaseConfig={apiKey:"AIzaSyAWdCMvOiAJln3eT9LIAQD3RWJUD0IQcLI",authDomain:"devoirs-pse.firebaseapp.com",databaseURL:"https://devoirs-pse-default-rtdb.europe-west1.firebasedatabase.app",projectId:"devoirs-pse",storageBucket:"devoirs-pse.appspot.com",messagingSenderId:"614730413904",appId:"1:614730413904:web:a5dd478af5de30f6bede55"};
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
-const okRef=db.ref('cadre_alternatif/ok');
+const okRef=db.ref('accompagnement/validations');
 let okData={};
 let fbReady=false;
 
@@ -539,7 +539,7 @@ function setOK(tid,d,h,sem,v){
 }
 
 // ============= ENVOIS =============
-const envoisRef=db.ref('cadre_alternatif/envois');
+const envoisRef=db.ref('accompagnement/envois');
 let envoisData={};
 
 envoisRef.on('value',snap=>{
