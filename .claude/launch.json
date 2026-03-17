@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cadre-guide",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "/Users/brahms/Documents/GitHub/cadre_alternatif_pedagogique"],
+      "port": 8765
+    }
+  ]
+}
