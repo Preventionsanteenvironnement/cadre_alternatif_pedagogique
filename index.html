@@ -771,7 +771,7 @@ function openCfg(tid){
           <div class="sr">&#128205; ${s[3]}</div>
           ${inFormation?'<div class="pfmp-note">En formation</div>':''}
         </div>
-        <button class="tb${ok?' on':''}" onclick="toggleOK('${tid}',${s[0]},${s[1]},'${sem}',this)"${dayFerie||inFormation?' disabled':''}>${ok?'&#128077;':'&#9898;'}</button>
+        <button class="tb${ok?' on':''}" onclick="toggleOK('${tid}',${s[0]},${s[1]},'${sem}',this)"${dayFerie?' disabled':''}>${ok?'&#128077;':'&#9898;'}</button>
       </div>`;
     });
   }
