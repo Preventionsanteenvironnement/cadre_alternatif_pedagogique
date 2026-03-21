@@ -550,9 +550,26 @@ function renderWk(){
 }
 
 function renderGS(){
-  document.getElementById('gsBtns').innerHTML=["B2GATL1","B2GATL2"].map(g=>
+  let btns=["B2GATL1","B2GATL2"].map(g=>
     `<button class="${selG===g?'on':''}" onclick="selG='${g}';render()">${g}</button>`
   ).join('');
+  let info='';
+  if(selD!==null&&selH!==null){
+    let wk=weeks[curWkIdx],sem=wk.t;
+    let g1Slots=gatlAt(G1,selD,selH,sem);
+    let g2Slots=gatlAt(G2,selD,selH,sem);
+    if(g1Slots.length>0&&g2Slots.length>0){
+      let same=g1Slots[0][2]===g2Slots[0][2]&&g1Slots[0][3]===g2Slots[0][3];
+      info=same
+        ?'<div style="text-align:center;font-size:.72em;font-weight:600;color:#e65100;margin-top:4px">\u26a0\ufe0f Regroup\u00e9s ensemble \u2014 '+g1Slots[0][2]+' ('+g1Slots[0][3]+')</div>'
+        :'<div style="text-align:center;font-size:.72em;font-weight:600;color:#0d47a1;margin-top:4px">\u2194\ufe0f S\u00e9par\u00e9s \u2014 G1: '+g1Slots[0][2]+' ('+g1Slots[0][3]+') / G2: '+g2Slots[0][2]+' ('+g2Slots[0][3]+')</div>';
+    }else if(g1Slots.length>0&&g2Slots.length===0){
+      info='<div style="text-align:center;font-size:.72em;font-weight:600;color:#666;margin-top:4px">Seul B2GATL1 a cours</div>';
+    }else if(g1Slots.length===0&&g2Slots.length>0){
+      info='<div style="text-align:center;font-size:.72em;font-weight:600;color:#666;margin-top:4px">Seul B2GATL2 a cours</div>';
+    }
+  }
+  document.getElementById('gsBtns').innerHTML=btns+info;
 }
 
 function renderDays(){
