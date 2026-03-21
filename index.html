@@ -120,6 +120,78 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .envoi-confirm:hover{background:#c8e6c9}
 .envoi-confirm.done{background:#2e7d32;color:#fff;border-color:#2e7d32;cursor:default}
 .envoi-cancel{padding:6px 10px;border:1.5px solid #e0e0e0;border-radius:8px;background:#fff;color:#999;font-size:.73em;cursor:pointer}
+
+/* DASHBOARD */
+.dash-card{background:#fff;border-radius:13px;padding:14px;margin-bottom:9px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.dash-num{font-size:2em;font-weight:800;color:#1a237e;line-height:1}
+.dash-sub{font-size:.75em;color:#666;margin-top:2px}
+.dash-row{display:flex;gap:8px;margin-bottom:9px}
+.dash-row .dash-card{flex:1;text-align:center}
+.dash-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dash-bar-label{font-size:.78em;font-weight:600;color:#333;min-width:90px}
+.dash-bar-track{flex:1;height:10px;background:#e0e0e0;border-radius:5px;overflow:hidden}
+.dash-bar-fill{height:100%;border-radius:5px;transition:width .3s}
+.dash-bar-val{font-size:.72em;font-weight:700;color:#666;min-width:30px;text-align:right}
+.heatmap{display:grid;grid-template-columns:50px repeat(8,1fr);gap:2px;font-size:.68em}
+.hm-cell{padding:6px 2px;text-align:center;border-radius:4px;font-weight:600}
+.hm-hdr{background:#e8eaf6;color:#1a237e;font-weight:700}
+.hm-day{background:#e8eaf6;color:#1a237e;font-weight:700;display:flex;align-items:center;justify-content:center}
+.hm-0{background:#ffcdd2;color:#c62828}.hm-1{background:#fff9c4;color:#f57f17}.hm-2{background:#c8e6c9;color:#2e7d32}.hm-3{background:#a5d6a7;color:#1b5e20}
+.crit-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff5f5;border:1px solid #ef9a9a;border-radius:8px;margin-bottom:4px;font-size:.8em}
+.crit-item .crit-icon{color:#c62828;font-size:1.1em}
+.db.today{box-shadow:0 0 0 2px #ff6f00}
+.day-toggle{display:flex;gap:4px;margin-top:4px}
+.day-toggle button{padding:3px 8px;border:1px solid #c5cae9;border-radius:6px;background:#fff;font-size:.65em;font-weight:600;cursor:pointer;color:#1a237e}
+.day-toggle button:hover{background:#e8eaf6}
+
+/* MODE SOMBRE */
+@media(prefers-color-scheme:dark){
+body{background:#121212;color:#e0e0e0}
+.hdr{background:linear-gradient(135deg,#0d1547,#1a237e)}
+.box,.dash-card{background:#1e1e1e;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.ct-btn{background:#1e1e1e;border-color:#333}
+.ct-btn:hover{background:#2a2a2a;border-color:#5c6bc0}
+.ct-btn .tn{color:#7986cb}
+.db{background:#1e1e1e;border-color:#333;color:#bbb}
+.db.on{background:#1a237e;color:#fff;border-color:#3949ab}
+.sb{background:#1e1e1e;border-color:#333;color:#bbb}
+.sb.on{background:#0d47a1;color:#fff;border-color:#1565c0}
+.gs button{background:#1e1e1e;border-color:#333;color:#bbb}
+.gs button.on{border-color:#d32f2f;background:#3e1e1e;color:#ef5350}
+.rc{border-color:#333}
+.rc.v{background:linear-gradient(135deg,#1a2e1a,#1e3a1e);border-left-color:#4caf50}
+.rc.nv{background:#1a1a1a;border-left-color:#555}
+.rc .rn{color:#e0e0e0}
+.rc .rcl{background:rgba(255,255,255,.05)}
+.rc .rcl .cn2{color:#7986cb}
+.rc .rs{background:#0d2137;color:#64b5f6}
+.cs{background:#1e1e1e;border-color:#333}
+.cs .st{color:#e0e0e0}
+.cdt{background:linear-gradient(135deg,#1a1f3a,#2a3060);color:#7986cb}
+.tb{background:#1e1e1e;border-color:#333}
+.tb.on{background:#1b3a1b;border-color:#4caf50}
+.info{background:#1a1a1a;border-color:#333;color:#888}
+.send-panel{background:#1a1a1a;border-color:#333}
+.sp-btns button{background:#1e1e1e;border-color:#333;color:#bbb}
+.sp-btns button.on{background:#1a1f3a;border-color:#3949ab;color:#7986cb}
+.sp-input,.fg input{background:#1e1e1e;border-color:#333;color:#e0e0e0}
+.envoi-bar{background:linear-gradient(135deg,#1a2e1a,#1e3a1e);border-color:#4caf50}
+.envoi-item{background:#1e1e1e;border-color:#388e3c}
+.flt button{background:#1e1e1e;border-color:#333;color:#bbb}
+.toast{background:#388e3c}
+.empty-msg{color:#777}
+.lbl{color:#90a4ae}
+.wk-nav button{background:#1e1e1e;border-color:#333;color:#7986cb}
+.wk-label .wt{color:#7986cb}
+.wk-label .wd{color:#999}
+.back-btn{background:#1a1f3a;color:#7986cb}
+.hm-cell{opacity:.9}
+.dash-bar-track{background:#333}
+.crit-item{background:#2a1a1a;border-color:#c62828}
+.dash-num{color:#7986cb}
+.dash-sub{color:#999}
+.send-btn{background:#1a1f3a;border-color:#3949ab;color:#7986cb}
+}
 </style>
 </head>
 <body>
@@ -130,6 +202,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="tabs">
 <button class="on" onclick="showPg('main',this)">Rechercher</button>
 <button onclick="showPg('config',this)">Configurer</button>
+<button onclick="showPg('dash',this)">Suivi</button>
 </div>
 </div>
 
@@ -148,6 +221,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div id="res"></div>
 <div class="info">&#9888;&#65039; Pensez &agrave; v&eacute;rifier avec le coll&egrave;gue avant d'envoyer l'&eacute;l&egrave;ve.</div>
 <div class="info">Aucune donn&eacute;e personnelle collect&eacute;e. Stockage partag&eacute; en temps r&eacute;el (Firebase). Conforme RGPD.</div>
+</div></div>
+
+<div class="pg" id="pgDash"><div class="c">
+<div id="dashContent"></div>
+<div class="info">Donn&eacute;es issues des envois enregistr&eacute;s dans l'outil. Aucune donn&eacute;e personnelle.</div>
 </div></div>
 
 <div class="pg" id="pgConfig"><div class="c">
@@ -401,11 +479,11 @@ const T=[
 // ============= AVATARS =============
 function emojiFor(id){
   const E={
-    bertrand:"🎨",bourgey:"🇬🇧",chaize:"💼",gubanti:"🏃",
-    herizi:"💼",ma:"💼",mecheri:"🧪",minardi:"✍️",
-    pedrot:"🇪🇸",mayol:"📊",milleret:"📖",maths:"🔢"
+    t1:"\u{1F3A8}",t2:"\u{1F1EC}\u{1F1E7}",t3:"\u{1F4BC}",t4:"\u{1F3C3}",
+    t5:"\u{1F4BC}",t6:"\u{1F4BC}",t7:"\u{1F9EA}",t8:"\u270D\uFE0F",
+    t9:"\u{1F1EA}\u{1F1F8}",t10:"\u{1F4CA}",t11:"\u{1F4D6}",t12:"\u{1F522}"
   };
-  return E[id]||"👤";
+  return E[id]||"\u{1F464}";
 }
 
 // ============= STATE =============
@@ -449,8 +527,10 @@ function showPg(p,btn){
   btn.classList.add('on');
   document.getElementById('pgMain').className=p==='main'?'pg show':'pg';
   document.getElementById('pgConfig').className=p==='config'?'pg show':'pg';
+  document.getElementById('pgDash').className=p==='dash'?'pg show':'pg';
   if(p==='config')renderCfgList();
   if(p==='main')render();
+  if(p==='dash')renderDash();
 }
 
 function chgWk(dir){curWkIdx=Math.max(0,Math.min(weeks.length-1,curWkIdx+dir));render()}
@@ -481,7 +561,8 @@ function renderDays(){
     let off=isVac(wk)||isFerie(wk,i)||(isGATLPFMP(wk));
     let hasBadge=isFerie(wk,i);
     let fs=getFormation(wk,i);
-    return`<button class="db${selD===i?' on':''}${off?' off':''}" onclick="${off?'':'selD='+i+';render()'}" data-d="${i}">
+    let isToday=(new Date().getDay()-1)===i&&wk===weeks[curWkIdx]&&!isVac(wk);
+    return`<button class="db${selD===i?' on':''}${off?' off':''}${isToday?' today':''}" onclick="${off?'':'selD='+i+';render()'}" data-d="${i}">
       ${DL[i]}${hasBadge?'<span class="badge"></span>':''}${fs.length?'<span class="badge" style="background:#1565c0"></span>':''}
     </button>`;
   }).join('');
@@ -757,7 +838,9 @@ function openCfg(tid){
   for(let di=0;di<5;di++){
     if(!byDay[di]||byDay[di].length===0)continue;
     let dayFerie=isFerie(wk,di);
-    html+=`<div class="cdt">${D[di]}${dayFerie?' \u2014 <span style="color:#c62828">F\u00c9RI\u00c9</span>':''}</div>`;
+    html+=`<div class="cdt">${D[di]}${dayFerie?' \u2014 <span style="color:#c62828">F\u00c9RI\u00c9</span>':''}
+      ${!dayFerie?`<span class="day-toggle"><button onclick="toggleAllDay('${tid}',${di},'${sem}',true)">Tout valider</button><button onclick="toggleAllDay('${tid}',${di},'${sem}',false)">Tout retirer</button></span>`:''}
+    </div>`;
     byDay[di].sort((a,b)=>a[1]-b[1]);
     byDay[di].forEach(s=>{
       let ok=getOK(tid,s[0],s[1],sem);
@@ -789,7 +872,165 @@ function toggleOK(tid,d,h,sem,btn){
   showToast();
 }
 
+function toggleAllDay(tid,di,sem,val){
+  let t=T.find(x=>x.id===tid);
+  let slots=t.s.filter(s=>!s[6]&&s[0]===di&&(s[5]==="AB"||s[5]===sem));
+  slots.forEach(s=>setOK(tid,s[0],s[1],sem,val));
+  showToast();
+  setTimeout(()=>openCfg(tid),300);
+}
+
 function showToast(){let t=document.getElementById('toast');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',1000)}
+
+// ============= DASHBOARD =============
+function renderDash(){
+  let el=document.getElementById('dashContent');
+  if(!el)return;
+  let all=Object.values(envoisData);
+  let now=new Date();
+  let wk=weeks[curWkIdx];
+  let wkStart=fmtISO(wk.mon),wkEnd=fmtISO(wk.fri);
+
+  // This week
+  let thisWk=all.filter(e=>e.date>=wkStart&&e.date<=wkEnd);
+  let thisWkConf=thisWk.filter(e=>e.confirmed);
+
+  // This year (since March 16)
+  let yearStart="2026-03-16";
+  let thisYear=all.filter(e=>e.date>=yearStart);
+
+  // By subject (toNom)
+  let bySubj={};
+  thisYear.forEach(e=>{let k=e.toNom||'Inconnu';bySubj[k]=(bySubj[k]||0)+1});
+  let subjSorted=Object.entries(bySubj).sort((a,b)=>b[1]-a[1]);
+
+  // By day
+  let byDay=[0,0,0,0,0];
+  thisYear.forEach(e=>{if(e.day>=0&&e.day<=4)byDay[e.day]++});
+  let maxDay=Math.max(...byDay,1);
+
+  // By slot
+  let bySlot=new Array(8).fill(0);
+  thisYear.forEach(e=>{if(e.slot>=0&&e.slot<=7)bySlot[e.slot]++});
+  let maxSlot=Math.max(...bySlot,1);
+
+  // By GATL group
+  let g1Count=thisYear.filter(e=>e.cls==='B2GATL1').length;
+  let g2Count=thisYear.filter(e=>e.cls==='B2GATL2').length;
+
+  // Heatmap: coverage (how many teachers available per day/slot)
+  let sem=wk.t;
+  let hmData=[];
+  for(let di=0;di<5;di++){
+    let row=[];
+    for(let hi=0;hi<8;hi++){
+      let gSched=G1;
+      let hasClass=gSched.some(s=>s[0]===di&&s[1]===hi&&(s[4]==="AB"||s[4]===sem));
+      if(!hasClass||isVac(wk)||isFerie(wk,di)||isGATLPFMP(wk)){row.push(-1);continue}
+      let cnt=0;
+      T.forEach(t=>{
+        let slots=tSlots(t,di,hi,sem);
+        if(slots.length===0)return;
+        if(slots[0][6])return;
+        if(getOK(t.id,di,hi,sem))cnt++;
+      });
+      row.push(cnt);
+    }
+    hmData.push(row);
+  }
+
+  // Critical slots
+  let crits=[];
+  for(let di=0;di<5;di++){
+    if(isFerie(wk,di))continue;
+    for(let hi=0;hi<8;hi++){
+      let hasG1=G1.some(s=>s[0]===di&&s[1]===hi&&(s[4]==="AB"||s[4]===sem));
+      let hasG2=G2.some(s=>s[0]===di&&s[1]===hi&&(s[4]==="AB"||s[4]===sem));
+      if(!hasG1&&!hasG2)continue;
+      if(isVac(wk)||isGATLPFMP(wk))continue;
+      let cnt=0;
+      T.forEach(t=>{
+        let slots=tSlots(t,di,hi,sem);
+        if(slots.length===0)return;
+        if(slots[0][6])return;
+        if(getOK(t.id,di,hi,sem))cnt++;
+      });
+      if(cnt===0)crits.push({di,hi});
+    }
+  }
+
+  let html='';
+
+  // Row 1: key numbers
+  html+=`<div class="dash-row">
+    <div class="dash-card"><div class="dash-num">${thisWk.length}</div><div class="dash-sub">cette semaine</div></div>
+    <div class="dash-card"><div class="dash-num">${thisYear.length}</div><div class="dash-sub">depuis mars</div></div>
+    <div class="dash-card"><div class="dash-num">${thisWkConf.length}/${thisWk.length}</div><div class="dash-sub">confirm\u00e9s</div></div>
+  </div>`;
+
+  // GATL split
+  if(thisYear.length>0){
+    html+=`<div class="dash-card"><div class="lbl">Par classe</div>
+      <div class="dash-bar"><div class="dash-bar-label">B2GATL1</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:${Math.round(g1Count/(g1Count+g2Count||1)*100)}%;background:#1a237e"></div></div><div class="dash-bar-val">${g1Count}</div></div>
+      <div class="dash-bar"><div class="dash-bar-label">B2GATL2</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:${Math.round(g2Count/(g1Count+g2Count||1)*100)}%;background:#283593"></div></div><div class="dash-bar-val">${g2Count}</div></div>
+    </div>`;
+  }
+
+  // By day bars
+  html+=`<div class="dash-card"><div class="lbl">Par jour</div>`;
+  for(let i=0;i<5;i++){
+    let pct=Math.round(byDay[i]/maxDay*100);
+    html+=`<div class="dash-bar"><div class="dash-bar-label">${D[i]}</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:${pct}%;background:#5c6bc0"></div></div><div class="dash-bar-val">${byDay[i]}</div></div>`;
+  }
+  html+=`</div>`;
+
+  // By slot bars
+  html+=`<div class="dash-card"><div class="lbl">Par cr\u00e9neau</div>`;
+  for(let i=0;i<8;i++){
+    let pct=Math.round(bySlot[i]/maxSlot*100);
+    html+=`<div class="dash-bar"><div class="dash-bar-label">${H[i]}</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:${pct}%;background:#7986cb"></div></div><div class="dash-bar-val">${bySlot[i]}</div></div>`;
+  }
+  html+=`</div>`;
+
+  // Top accueil subjects
+  if(subjSorted.length>0){
+    let maxS=subjSorted[0][1];
+    html+=`<div class="dash-card"><div class="lbl">Accueillis par</div>`;
+    subjSorted.slice(0,6).forEach(([nom,cnt])=>{
+      let pct=Math.round(cnt/maxS*100);
+      html+=`<div class="dash-bar"><div class="dash-bar-label">${nom}</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:${pct}%;background:#43a047"></div></div><div class="dash-bar-val">${cnt}</div></div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Heatmap
+  html+=`<div class="dash-card"><div class="lbl">Couverture semaine ${sem} (coll\u00e8gues valid\u00e9s)</div><div class="heatmap">`;
+  html+=`<div class="hm-cell hm-hdr"></div>`;
+  H.forEach(h=>{html+=`<div class="hm-cell hm-hdr">${h}</div>`});
+  for(let di=0;di<5;di++){
+    html+=`<div class="hm-cell hm-day">${DL[di]}</div>`;
+    for(let hi=0;hi<8;hi++){
+      let v=hmData[di][hi];
+      if(v<0){html+=`<div class="hm-cell" style="background:#f5f5f5;color:#ccc">-</div>`;continue}
+      let cls=v===0?'hm-0':v===1?'hm-1':v===2?'hm-2':'hm-3';
+      html+=`<div class="hm-cell ${cls}">${v}</div>`;
+    }
+  }
+  html+=`</div></div>`;
+
+  // Critical slots
+  if(crits.length>0&&!isVac(wk)&&!isGATLPFMP(wk)){
+    html+=`<div class="dash-card"><div class="lbl">\u26a0\ufe0f Cr\u00e9neaux sans coll\u00e8gue valid\u00e9</div>`;
+    crits.forEach(c=>{
+      html+=`<div class="crit-item"><span class="crit-icon">\u26a0\ufe0f</span> ${D[c.di]} ${H[c.hi]} \u2014 aucun accueil possible</div>`;
+    });
+    html+=`</div>`;
+  }else if(!isVac(wk)&&!isGATLPFMP(wk)){
+    html+=`<div class="dash-card" style="text-align:center;color:#2e7d32;font-weight:600;font-size:.85em">\u2705 Tous les cr\u00e9neaux ont au moins un coll\u00e8gue valid\u00e9</div>`;
+  }
+
+  el.innerHTML=html;
+}
 
 // ============= AUTO-DETECT =============
 function autoDetect(){
