@@ -137,6 +137,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .hm-hdr{background:#e8eaf6;color:#1a237e;font-weight:700}
 .hm-day{background:#e8eaf6;color:#1a237e;font-weight:700;display:flex;align-items:center;justify-content:center}
 .hm-0{background:#ffcdd2;color:#c62828}.hm-1{background:#fff9c4;color:#f57f17}.hm-2{background:#c8e6c9;color:#2e7d32}.hm-3{background:#a5d6a7;color:#1b5e20}
+.hm-cell[onclick]:hover{opacity:.7;transform:scale(1.05);transition:.1s}
 .crit-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff5f5;border:1px solid #ef9a9a;border-radius:8px;margin-bottom:4px;font-size:.8em}
 .crit-item .crit-icon{color:#c62828;font-size:1.1em}
 .db.today{box-shadow:0 0 0 2px #ff6f00}
@@ -1030,7 +1031,7 @@ function renderDash(){
       let v=hmData[di][hi];
       if(v<0){html+=`<div class="hm-cell" style="background:#f5f5f5;color:#ccc">-</div>`;continue}
       let cls=v===0?'hm-0':v===1?'hm-1':v===2?'hm-2':'hm-3';
-      html+=`<div class="hm-cell ${cls}">${v}</div>`;
+      html+=`<div class="hm-cell ${cls}" style="cursor:pointer" onclick="goToSlot(${di},${hi})">${v}</div>`;
     }
   }
   html+=`</div></div>`;
@@ -1039,14 +1040,45 @@ function renderDash(){
   if(crits.length>0&&!isVac(wk)&&!isGATLPFMP(wk)){
     html+=`<div class="dash-card"><div class="lbl">\u26a0\ufe0f Cr\u00e9neaux sans coll\u00e8gue valid\u00e9</div>`;
     crits.forEach(c=>{
-      html+=`<div class="crit-item"><span class="crit-icon">\u26a0\ufe0f</span> ${D[c.di]} ${H[c.hi]} \u2014 aucun accueil possible</div>`;
+      html+=`<div class="crit-item" style="cursor:pointer" onclick="goToSlot(${c.di},${c.hi})"><span class="crit-icon">\u26a0\ufe0f</span> ${D[c.di]} ${H[c.hi]} \u2014 aucun accueil possible</div>`;
     });
     html+=`</div>`;
   }else if(!isVac(wk)&&!isGATLPFMP(wk)){
     html+=`<div class="dash-card" style="text-align:center;color:#2e7d32;font-weight:600;font-size:.85em">\u2705 Tous les cr\u00e9neaux ont au moins un coll\u00e8gue valid\u00e9</div>`;
   }
 
+  // Historique des déplacements
+  let recent=all.sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,15);
+  if(recent.length>0){
+    html+=`<div class="dash-card"><div class="lbl">Historique des d\u00e9placements</div>`;
+    recent.forEach(e=>{
+      let dateStr=e.date||'';
+      let parts=dateStr.split('-');
+      let dateFmt=parts.length===3?(parts[2]+'/'+parts[1]):'';
+      let jourNom=e.day>=0&&e.day<=4?D[e.day]:'';
+      let heure=e.slot>=0&&e.slot<=7?H[e.slot]:'';
+      let travTxt=e.travail?'Travail donn\u00e9':'Travail libre';
+      if(e.detail)travTxt+=' \u2014 '+e.detail;
+      let confIcon=e.confirmed?'\u2705':'\u23f3';
+      html+=`<div style="padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:4px;font-size:.8em">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><strong>${e.cls||'?'}</strong> \u2192 <strong>${e.toNom||'?'}</strong></div>
+          <span>${confIcon}</span>
+        </div>
+        <div style="color:#666;font-size:.88em;margin-top:2px">\u{1F4C5} ${jourNom} ${dateFmt} \u00e0 ${heure} \u2014 \u{1F4CD} ${e.salle||'?'}</div>
+        <div style="color:#888;font-size:.82em;margin-top:1px">${travTxt}</div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
   el.innerHTML=html;
+}
+
+function goToSlot(di,hi){
+  selD=di;selH=hi;
+  let btn=document.querySelector('.tabs button');
+  showPg('main',btn);
 }
 
 // ============= AUTO-DETECT =============
